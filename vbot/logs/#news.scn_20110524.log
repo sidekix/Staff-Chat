@@ -1,0 +1,31 @@
+[24/05/2011 @ 16:52:20] * sidekix slaps Giotto around a bit with a large trojan
+[24/05/2011 @ 16:52:37] <Giotto> bin nicht da ^^
+[24/05/2011 @ 16:53:15] <sidekix> schade
+[24/05/2011 @ 16:53:30] <sidekix> hast du ein paar min zeit ?
+[24/05/2011 @ 16:53:34] <Giotto> joa
+[24/05/2011 @ 16:53:38] <Giotto> schreib einfach mal
+[24/05/2011 @ 16:54:05] <sidekix> kannst du mir anhand eines tuts dein newsbot in das github repo uploaden ?
+[24/05/2011 @ 16:54:34] <sidekix> http://www.staff-chat.net/seCret-wiki/doku.php?id=github
+[24/05/2011 @ 16:56:01] <sidekix> und schieb dich mal wieder in #update rein, damit du deinen eigenen spam ggf. auch sehen kannst :)
+[24/05/2011 @ 16:59:12] <Giotto> also ich clone das repo, packe meinen rotz darein und commite das dann?
+[24/05/2011 @ 16:59:46] <sidekix> ja
+[24/05/2011 @ 16:59:50] <sidekix> habe da was vergessen
+[24/05/2011 @ 16:59:59] <sidekix> man kann natuerlich unterordnermachen
+[24/05/2011 @ 17:00:35] <sidekix> also z.b. /home/test/scn-repo/Staff-Chat/unterordner/
+[24/05/2011 @ 17:00:40] <sidekix> und dann da die datein rein
+[24/05/2011 @ 17:01:04] <sidekix> ich habe es noch nie mit mehreren datein versucht
+[24/05/2011 @ 17:01:09] <sidekix> kommt auf den test an
+[24/05/2011 @ 17:01:20] <sidekix> git add dateiname
+[24/05/2011 @ 17:01:30] <sidekix> git commit -m '..'
+[24/05/2011 @ 17:01:39] <sidekix> git add dateiname2
+[24/05/2011 @ 17:01:41] <sidekix> git commit -m '..'
+[24/05/2011 @ 17:01:43] <sidekix> git add dateiname3
+[24/05/2011 @ 17:01:44] <sidekix> git commit -m '..'
+[24/05/2011 @ 17:01:45] <sidekix> ...
+[24/05/2011 @ 17:02:23] <Giotto> mach ich nachher von zuhause aus
+[24/05/2011 @ 17:02:23] <sidekix> braucht noch den github benutzername
+[24/05/2011 @ 17:02:30] <Giotto> bin gerade erst in sxb angekommen
+[24/05/2011 @ 17:02:44] <sidekix> k, ich habe heute eh frei, bin also eher wieder da
+[24/05/2011 @ 17:03:23] <sidekix> muss zwar kurz hoch in den globus, denke aber dass ich gegen 21 uhr spaetesdens da sein werde
+[24/05/2011 @ 17:04:07] <Giotto> k
+[24/05/2011 @ 17:45:42] <Giotto> sidekix, wstuermer @ github
