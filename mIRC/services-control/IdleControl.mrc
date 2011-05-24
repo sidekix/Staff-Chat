@@ -58,3 +58,35 @@ dialog -l idlerpg {
   edit "IdleRPG v1.0 r94", 2, 210 138 54 10, read center
 }
 
+## Funktionen
+
+on *:DIALOG:idlerpg:init:*: {
+  idlerpg.init
+  idle.sync
+  .timeridlerpg 0 0 idlerpg.init
+  did $iif(%idle.title,-c,-u) idlerpg 208
+}
+on *:DIALOG:idlerpg:sclick:*: {
+  if ($did == 205) {
+    set %idle.autol $did(205).state
+  }
+  if ($did == 206) {
+    idle.login
+  }
+  if ($did == 113) {
+    idle.sync
+  }
+  if ($did == 208) {
+    if ($did(208).state == 0) {
+      unset %idle.timewarn
+    }
+    set %idle.title $did(208).state
+    .timerrpgtitle $iif($did(208).state == 1,0 1 title.idlerpg,off)
+    titlebar $iif($did(208).state == 1,$iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1) until next level,),)
+  }
+}
+on *:DIALOG:idlerpg:close:*: {
+  idlerpg.init
+  .timeridlerpg off
+}
+
