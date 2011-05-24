@@ -90,3 +90,19 @@ on *:DIALOG:idlerpg:close:*: {
   .timeridlerpg off
 }
 
+menu * {
+  - 
+  SCN S-Control
+  .IdleRPG {
+    idlerpg
+  }
+}
+
+alias idlerpg {
+  if ($server) {
+    dialog $iif($dialog(idlerpg),-v,-m) idlerpg idlerpg
+  }
+  else {
+    echo -a Du bist zu keinem Server verbunden...
+  }
+} 
