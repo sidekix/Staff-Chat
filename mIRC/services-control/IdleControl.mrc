@@ -106,3 +106,83 @@ alias idlerpg {
     echo -a Du bist zu keinem Server verbunden...
   }
 } 
+
+on *:JOIN:#idlerpg.scn: {
+  if (%idle.title) {
+    .timerrpgtitle 0 1 title.idlerpg
+  }
+  if ($nick == $me && %idle.me && %idle.pass && %idle.autol) {
+    idle.login
+  }
+}
+on *:PART:#idlerpg.scn: {
+  if ($nick == $me) {
+    set %idle.nl -
+    .timerrpgtitle off
+    titlebar 
+  }
+}
+on *:DISCONNECT: {
+  set %idle.nl -
+  .timerrpgtitle off
+  titlebar 
+}
+on *:TEXT:*, the *, has attained level *! Next level in * days, *:#idlerpg.scn: {
+  if ($remove($1,$chr(44)) == %idle.me) {
+    idlerpgset $gettok($1-,$calc($0 - 2),32) $gettok($1-,$0,32)
+    set %idle.level $remove($gettok($1-,$calc($0 - 7),32),!)
+  }
+}
+on *:TEXT:Penalty of * days, * added to *'s timer for LOGOUT command.:#idlerpg.scn: {
+  if ($mid($8,1,$calc($len($8) - 2)) == %idle.me) {
+    idlerpgadd $3 $gettok($1-,5,32)
+  }
+}
+on *:TEXT:* has been set upon by a * and gets savagely beaten! * days, * is added to *'s clock.:#idlerpg.scn: {
+  if ($1 == %idle.me) {
+    idlerpgadd $gettok($1-,$calc($0 - 8),32) $gettok($1-,$calc($0 - 6),32)
+  }
+}
+on *:TEXT:* [*/*] has been set upon by a * [*/*] and fights it off! * day, * is removed from *'s clock.:#idlerpg.scn: {
+  if ($mid($calc($0 - 1),1,$calc($len($calc($0 - 1)) - 2)) == %idle.me) {
+    idlerpgrem $gettok($1-,$calc($0 - 8),32) $gettok($1-,$calc($0 - 6),32)
+  }
+}
+on *:TEXT:*, the level *, is now online from nickname *. Next level in * days, *.:#idlerpg.scn: {
+  if ($remove($1,$chr(44)) == %idle.me) {
+    idlerpgset $gettok($1-,$calc($0 - 2),32) $gettok($1-,$0,32)
+    set %idle.level $remove($gettok($1-,4,32),$chr(44))
+  }
+}
+on *:TEXT:* reaches next level in * days, *.:#idlerpg.scn: {
+  if ($1 == %idle.me) {
+    idlerpgset $gettok($1-,$calc($0 - 2),32) $gettok($1-,$0,32)
+  }
+}
+on ^*:OPEN:?:*: {
+  if ($nick == Idle) {
+    if ($mid($1,1,$calc($len($1) - 1)) == %idle.me) {
+      if {
+        idlerpg
+        set %idle.level $3
+        idlerpgset $gettok($1-,$calc($0 - 9),32) $gettok($1-,$calc($0 - 7),32)
+        did -ra idlerpg 108 $remove($gettok($1-,4- $calc($0 - 13),32),;)
+        idlerpgds $gettok($1-,$calc($0 - 5),32) $remove($gettok($1-,$calc($0 - 3),32),;)
+        did -ra idlerpg 112 $gettok($1-,$0,32)
+        did -e idlerpg 107-112
+        did $iif($remove($gettok($1-,$calc($0 - 11),32),;) == Online,-b,-e) idlerpg 206
+        unset %idle.syncx
+      }
+      halt
+    }
+    elseif ($1- == You are not logged in*) {
+      if (!$me ison #idlerpg.scn) {
+        join #idlerpg.scn
+      }
+      if (!%idle.autol) {
+        idle.login
+      }
+    }
+    idle.sync
+  }
+}
