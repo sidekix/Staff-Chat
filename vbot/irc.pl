@@ -98,6 +98,7 @@ use lib::worker::announce;  $worker->{'announce'} = lib::worker::announce->new($
 use lib::worker::heise;     $worker->{'heise'}    = lib::worker::heise->new($conn);
 use lib::worker::ping;      $worker->{'ping'}     = lib::worker::ping->new($conn);
 use lib::worker::gbo;       $worker->{'gbo'}      = lib::worker::gbo->new($conn);
+use lib::worker::caschy;    $worker->{'caschy'}   = lib::worker::caschy->new($conn);
 
 ############################################################
 my $parser = {}; # create command parsers
@@ -127,6 +128,8 @@ use lib::parser::info_keys;
   $parser->{'90_infokeys'} = lib::parser::info_keys->new();
 use lib::parser::stats;
   $parser->{'91_stats'} = lib::parser::stats->new();
+use lib::parser::caschy;
+  $parser->{'16_caschy'} = lib::parser::caschy->new();
 
 # non default
 if (HAL_CONVERSATION) {

@@ -1,0 +1,62 @@
+[24/05/2011 @ 16:52:20] * sidekix slaps Giotto around a bit with a large trojan
+[24/05/2011 @ 16:52:37] <Giotto> bin nicht da ^^
+[24/05/2011 @ 16:53:15] <sidekix> schade
+[24/05/2011 @ 16:53:30] <sidekix> hast du ein paar min zeit ?
+[24/05/2011 @ 16:53:34] <Giotto> joa
+[24/05/2011 @ 16:53:38] <Giotto> schreib einfach mal
+[24/05/2011 @ 16:54:05] <sidekix> kannst du mir anhand eines tuts dein newsbot in das github repo uploaden ?
+[24/05/2011 @ 16:54:34] <sidekix> http://www.staff-chat.net/seCret-wiki/doku.php?id=github
+[24/05/2011 @ 16:56:01] <sidekix> und schieb dich mal wieder in #update rein, damit du deinen eigenen spam ggf. auch sehen kannst :)
+[24/05/2011 @ 16:59:12] <Giotto> also ich clone das repo, packe meinen rotz darein und commite das dann?
+[24/05/2011 @ 16:59:46] <sidekix> ja
+[24/05/2011 @ 16:59:50] <sidekix> habe da was vergessen
+[24/05/2011 @ 16:59:59] <sidekix> man kann natuerlich unterordnermachen
+[24/05/2011 @ 17:00:35] <sidekix> also z.b. /home/test/scn-repo/Staff-Chat/unterordner/
+[24/05/2011 @ 17:00:40] <sidekix> und dann da die datein rein
+[24/05/2011 @ 17:01:04] <sidekix> ich habe es noch nie mit mehreren datein versucht
+[24/05/2011 @ 17:01:09] <sidekix> kommt auf den test an
+[24/05/2011 @ 17:01:20] <sidekix> git add dateiname
+[24/05/2011 @ 17:01:30] <sidekix> git commit -m '..'
+[24/05/2011 @ 17:01:39] <sidekix> git add dateiname2
+[24/05/2011 @ 17:01:41] <sidekix> git commit -m '..'
+[24/05/2011 @ 17:01:43] <sidekix> git add dateiname3
+[24/05/2011 @ 17:01:44] <sidekix> git commit -m '..'
+[24/05/2011 @ 17:01:45] <sidekix> ...
+[24/05/2011 @ 17:02:23] <Giotto> mach ich nachher von zuhause aus
+[24/05/2011 @ 17:02:23] <sidekix> braucht noch den github benutzername
+[24/05/2011 @ 17:02:30] <Giotto> bin gerade erst in sxb angekommen
+[24/05/2011 @ 17:02:44] <sidekix> k, ich habe heute eh frei, bin also eher wieder da
+[24/05/2011 @ 17:03:23] <sidekix> muss zwar kurz hoch in den globus, denke aber dass ich gegen 21 uhr spaetesdens da sein werde
+[24/05/2011 @ 17:04:07] <Giotto> k
+[24/05/2011 @ 17:45:42] <Giotto> sidekix, wstuermer @ github
+[24/05/2011 @ 19:01:34] <sidekix> bist eingefuegt
+[24/05/2011 @ 19:01:40] * sidekix slaps Giotto upside the head with a hammer!
+[24/05/2011 @ 19:18:06] <Giotto> war gerade an der packstation - hab die mail aber schon gelesen ;)
+[24/05/2011 @ 19:18:36] <Giotto> vbot@irc:~/git/Staff-Chat$ git push origin Giotto
+[24/05/2011 @ 19:18:36] <Giotto> fatal: remote error: 
+[24/05/2011 @ 19:18:36] <Giotto>   You can't push to git://github.com/sidekix/Staff-Chat.git
+[24/05/2011 @ 19:18:37] <Giotto>   Use git@github.com:sidekix/Staff-Chat.git
+[24/05/2011 @ 19:24:54] <Giotto> fixed
+[24/05/2011 @ 20:46:29] <sidekix> hatztest du was vergessen als der error kam ?
+[24/05/2011 @ 20:47:11] <Giotto> nee. in .git/config stand im "origin"teil aber die falsche url
+[24/05/2011 @ 20:49:21] <sidekix> Oo
+[24/05/2011 @ 20:49:43] <sidekix> lag der fehler nun an mir ?
+[24/05/2011 @ 20:57:16] <Giotto> kA. glaub eher am push
+[24/05/2011 @ 20:57:31] <Giotto> also ein "git push Giotto" hätte wahrscheinlich nicht gemeckert
+[24/05/2011 @ 21:01:40] <sidekix> man muss das origin angeben soweit ich weiss
+[24/05/2011 @ 21:03:18] <Giotto> nö
+[24/05/2011 @ 21:03:31] <Giotto> vbot@irc:~/git/Staff-Chat$ git push Giotto
+[24/05/2011 @ 21:03:31] <Giotto> Enter passphrase for key '/home/vbot/.ssh/id_dsa': 
+[24/05/2011 @ 21:03:31] <Giotto> Everything up-to-date
+[24/05/2011 @ 21:11:47] <sidekix> ich bin mir nicht sicher, meine aber das geht dann in den master branch
+[24/05/2011 @ 21:11:54] <sidekix> ka, spaeter mal testen ...
+[24/05/2011 @ 21:19:03] <Giotto> bin mal afk
+[24/05/2011 @ 23:26:17] <Giotto> reh
+[24/05/2011 @ 23:49:09] <sidekix> reh :)
+[24/05/2011 @ 23:56:03] <sidekix> am besten immer als erstes "git pull" machen
+[24/05/2011 @ 23:56:11] <Giotto> du könntest die git-doku erweitern, dass man erst mal mit "git pull origin <ircnick>" aktualisiert 
+[24/05/2011 @ 23:56:14] <Giotto> ^^
+[24/05/2011 @ 23:56:19] <sidekix> damit das gesamte repo auf den aktuellen stand gebracht wird
+[24/05/2011 @ 23:56:20] <Giotto> 2 doofe und so ;)
+[24/05/2011 @ 23:56:31] <sidekix> git pull sollte reichen
+[24/05/2011 @ 23:56:57] <sidekix> das sollte dann alles ziehen was neu bzw veraendert wurde

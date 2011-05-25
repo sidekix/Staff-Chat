@@ -5,4 +5,3 @@ while [ 1 ]; do
   echo "[`date`] terminated - restarting in 60 seconds";
   sleep 60;
 done
-
