@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r104
+; # SCN X-Control 1.0 r113
 ; # (c) Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -9,17 +9,16 @@
 
 
 ; ####################
-: #      Menu´s      #
+: # Menu´s #
 ; ####################
 menu * {
   SCN X-Control
-  ;  .SCN S-Control: { dialog -m scnscontrol scnscontrol }
   .SCN I-Control: { dialog -m idlerpgcontrol idlerpgcontrol }
   -
 }
 
 ; #######################
-: #      I-Control      #
+: # I-Control #
 ; #######################
 
 dialog -l idlerpgcontrol {
@@ -40,9 +39,7 @@ dialog -l idlerpgcontrol {
   button "Passwort", 13, 40 30 28 12, tab 100 flat
   button "Charname", 14, 70 30 28 12, tab 100 flat
   button "Class", 15, 40 43 28 12, tab 100 flat
-  button "Backup", 16, 69 43 28 12, tab 100 flat
   button "Loeschen", 17, 40 56 28 12, tab 100 flat
-  button "Register", 18, 69 56 28 12, tab 100 flat
   text "Benutzername", 101, 107 21 50 9, tab 100
   edit Keine Daten ..., 102, 160 20 102 10, tab 100 read
   text "Zeit bis zum Levelup", 103, 107 61 50 9, tab 100
@@ -76,11 +73,11 @@ dialog -l idlerpgcontrol {
   text "KICK 250*(1.14^(DEIN_LEVEL))", 25, 8 86 155 8, disable tab 200 center
   text "MSG/SAY [Laenge]*(1.14^(DEIN_LEVEL))", 26, 8 105 155 8, disable tab 200 center
   button "Schliessen", 1, 132 137 34 12, default flat ok cancel
-  edit "IdleRPG v1.0 r104", 2, 210 138 54 10, read center
+  edit "IdleRPG v1.0 r113", 2, 210 138 54 10, read center
 }
 
 ; ###############################
-: #      I-Control aliases      #
+: # I-Control aliases #
 ; ###############################
 
 alias idlerpgcontrol {
@@ -96,7 +93,7 @@ alias title.idlerpgcontrol {
 }
 alias idlerpgcontrolset {
   if ($2) {
-    var %idle.days = $calc($1 * 86400), %idletotal = $remove($2,.,:,;), %idle.std = $calc($mid(%idletotal,1,2) * 60 * 60), %idle.min = $calc($mid(%idletotal,3,2) * 60), %idle.sek = $mid(%idletotal,5,2) 
+    var %idle.days = $calc($1 * 86400), %idletotal = $remove($2,.,:,;), %idle.std = $calc($mid(%idletotal,1,2) * 60 * 60), %idle.min = $calc($mid(%idletotal,3,2) * 60), %idle.sek = $mid(%idletotal,5,2)
     set %idle.nl $calc($gmt + %idle.days + %idle.std + %idle.min + %idle.sek)
   }
 }
@@ -128,10 +125,10 @@ alias idle.sync {
     idlerpgcontrol
     did -b idlerpgcontrol 107-112
     did -ra idlerpgcontrol 108,110,112 Warte auf Daten ...
-    set %idle.sync $calc($gmt + $iif($1,$1,10))
+    set %idle.sync $calc($gmt + $iif($1,$1,120))
     set %idle.syncx 1
     closemsg Idle
-    .msg Idle status %idle.nick 
+    .msg Idle status %idle.nick
   }
 }
 alias idlerpgcontrol.init {
@@ -162,7 +159,7 @@ alias kampf {
 }
 
 ; ###############################
-: #      I-Control Event´s      #
+: # I-Control Event´s #
 ; ###############################
 
 on *:JOIN:#IdleRPG.scn: {
@@ -178,13 +175,13 @@ on *:PART:#IdleRPG.scn: {
   if ($nick == $me) {
     set %idle.nl -
     .timerrpgtitle off
-    titlebar 
+    titlebar
   }
 }
 on *:DISCONNECT: {
   set %idle.nl -
   .timerrpgtitle off
-  titlebar 
+  titlebar
 }
 on *:TEXT:*, the *, has attained level *! Next level in * days, *:#IdleRPG.scn: {
   if ($remove($1,$chr(44)) == %idle.nick) {
@@ -266,7 +263,7 @@ on ^*:OPEN:?:*: {
 }
 
 ; ##############################
-: #      I-Control $devents    #
+: # I-Control $devents #
 ; ##############################
 
 on 1:dialog:idlerpgcontrol:*:*:{
@@ -359,13 +356,47 @@ on 1:dialog:idlerpgcontrol:*:*:{
     }
     elseif ($did = 8) {
       if (%idle.chnick && %idle.choption && $address(Idle,0)) {
-        .msg Idle jump %idle.chnick $+ : $+ %idle.choption
+        .msg Idle jump %idle.chnick %idle.choption
       }
       else {
         halt
       }
     }
     ; ############################ Admin Buttons Ende
+    ; ############################ Change Buttons 
+    elseif ($did = 13) {
+      if (%idle.chnick && %idle.choption && $address(Idle,0)) {
+        .msg Idle chpass %idle.chnick %idle.choption
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 14) {
+      if (%idle.chnick && %idle.choption && $address(Idle,0)) {
+        .msg Idle chuser %idle.chnick %idle.choption
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 15) {
+      if (%idle.chnick && %idle.choption && $address(Idle,0)) {
+        .msg Idle chclass %idle.chnick %idle.choption
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 17) {
+      if (%idle.chnick && %idle.choption && $address(Idle,0)) {
+        .msg Idle del %idle.chnick
+      }
+      else {
+        halt
+      }
+    }
+    ; ############################ Change Buttons Ende
   }
   ; ############################ Ende von $devent = sclick
   ; ############################ Anfang von $devent = edit
@@ -374,13 +405,13 @@ on 1:dialog:idlerpgcontrol:*:*:{
       if ($did(27).text == $null) {
         unset %idle.chnick
       }
-      set %idle.chnick $did(27).text 
+      set %idle.chnick $did(27).text
     }
     if ($did = 28) {
       if ($did(28).text == $null) {
         unset %idle.choption
       }
-      set %idle.choption $did(28).text 
+      set %idle.choption $did(28).text
     }
   }
   ; ############################ Ende von $devent = edit
@@ -393,4 +424,5 @@ on 1:dialog:idlerpgcontrol:*:*:{
     unset %idle.fight.nick
   }
   ; ############################ Ende von $devent = close
-}  
+} 
+
