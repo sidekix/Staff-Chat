@@ -323,7 +323,49 @@ on 1:dialog:idlerpgcontrol:*:*:{
         halt
       }
     }
-    ; ############################ Cheat buttons ende
+    ; ############################ Cheat Buttons Ende
+    ; ############################ Admin Buttons
+    elseif ($did = 4) {
+      if (%idle.chnick && $address(Idle,0)) {
+        .msg Idle mkadmin %idle.chnick
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 5) {
+      if ($address(Idle,0)) {
+        .msg Idle die
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 6) {
+      if ($address(Idle,0)) {
+        .msg Idle restart
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 7) {
+      if ($address(Idle,0)) {
+        .msg Idle pause
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 8) {
+      if (%idle.chnick && %idle.choption && $address(Idle,0)) {
+        .msg Idle jump %idle.chnick %idle.choption
+      }
+      else {
+        halt
+      }
+    }
+    ; ############################ Admin Buttons Ende
   }
   ; ############################ Ende von $devent = sclick
   ; ############################ Anfang von $devent = edit
