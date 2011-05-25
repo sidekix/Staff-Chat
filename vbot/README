@@ -1,0 +1,82 @@
+############################################################
+# Contents
+  1. Running vBot
+  2. required Perl modules
+  3. how to contribute
+  4. changelog
+  5. contact
+
+############################################################
+# 1. running vBot
+To run vBot simply edit lib/config.pm_dist, rename it to
+lib/config.pm and execute the run script.
+It will restart vBot every time it terminates after 180 sec.
+If you do that in screen or through daemontools you can set
+it up as a daemon.
+
+vBot creates .db files under directory data. Keep them when
+you upgrade.
+Don't forget to merge new config lines in your existing one.
+
+The parser module lib/parser/hal.pm requres connection to a
+megahal TCP server which is not part of vBot.
+Ask the author of vBot for the megahal server if you want to
+use the HAL feature.
+
+############################################################
+# 2. required Perl modules (dist source: fc6 / debian)
+CGI                 FIXME                   FIXME
+Encode              FIXME                   FIXME
+Date::Parse         RPM: perl-TimeDate      APT: libtimedate-perl
+DBD::PgLite         CPAN                    CPAN
+  DBD::SQLite       RPM: perl-DBD-SQLite    APT: libdbd-sqlite
+DBI                 RPM: perl-DBI           APT: libdbi-perl
+Net::IRC            CPAN                    APT: libnet-irc-perl
+String::UTF8        FIXME                   FIXME
+Time::HiRes         FIXME                   FIXME
+XML::LibXML::Valid  CPAN                    CPAN
+WWW::Mechanize      RPM: perl-WWW-Mechanize APT: libwww-mechanize-perl
+  XML::Parser       RPM: perl-XML-Parser    APT: libxml-parser-perl
+XML::RSS            RPM: perl-XML-RSS       APT: libxml-rss-perl
+XML::Atom::Client   FIXME                   FIXME
+
+############################################################
+# 3. how you can contribute
+- port to POE::Component::IRC
+- fix this "closing dbh with active statement handles" issue
+  located in lib/core/state.pm occuring when started on
+  Fedora Core (seen on Debian, too)
+- provide good ideas where to go from here
+- use vBot and provide need for new features
+  (e.g. localization)
+- document the configuration file
+- send me your fixes/extensions
+
+############################################################
+# 4. changelog
+* Sun May 20 2007 Frank Wittig <frank@lintuxhome.de> - 0.5.5
+- Das Ding lief jetzt so lange stabil ohne Änderungen, dass ich
+  es nicht mehr als Beta bezeichnen will
+- Bei den Quotes ist jetzt Tag und Monat richtig herum
+
+* Thu Mar 01 2007 Frank Wittig <frank@lintuxhome.de> - 0.5.4beta4
+- Der Flood-Sleep nimmt jetzt den Float IRC_DELAY
+- Vote-Modul gibt die Anzahl der Stimmen aus
+- Google-Modul macht schöneren Output
+
+* Tue Feb 27 2007 Frank Wittig <frank@lintuxhome.de> - 0.5.4beta3
+- !stat um Output im Fall, dass er angefragte Nick nicht bekannt
+  ist, ergänzt
+- Output der Google-Kommandos verbessert
+
+* Mon Feb 26 2007 Frank Wittig <frank@lintuxhome.de> - 0.5.4beta2
+- Hilfe des Foren-Modul ergänzt (THX to Michael aka Darkdream)
+
+* Mon Feb 26 2007 Frank Wittig <frank@lintuxhome.de> - 0.5.4beta2
+- begin of changelog in readme file
+
+############################################################
+# 5. contacting the author
+- See head lines of irc.pl for contact information...
+
+To be continued...
