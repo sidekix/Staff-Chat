@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r100
+; # SCN X-Control 1.0 r104
 ; # (c) Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -76,7 +76,7 @@ dialog -l idlerpgcontrol {
   text "KICK 250*(1.14^(DEIN_LEVEL))", 25, 8 86 155 8, disable tab 200 center
   text "MSG/SAY [Laenge]*(1.14^(DEIN_LEVEL))", 26, 8 105 155 8, disable tab 200 center
   button "Schliessen", 1, 132 137 34 12, default flat ok cancel
-  edit "IdleRPG v1.0 r100", 2, 210 138 54 10, read center
+  edit "IdleRPG v1.0 r104", 2, 210 138 54 10, read center
 }
 
 ; ###############################
@@ -88,14 +88,11 @@ alias idlerpgcontrol {
     dialog $iif($dialog(idlerpgcontrol),-v,-m) idlerpgcontrol idlerpgcontrol
   }
   else {
-    echo -aError; Not connected to server
+    echo -a Error - Du musst mit einem server verbunden sein.
   }
 }
 alias title.idlerpgcontrol {
   titlebar $iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1) bis zum Levelup,)
-  if ($calc(%idle.nl - $gmt) == %idle.titlewarn) {
-    echo -a4NOTICE! YOU LEVEL UP IN 30 MINUTES
-  }
 }
 alias idlerpgcontrolset {
   if ($2) {
