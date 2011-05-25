@@ -359,7 +359,7 @@ on 1:dialog:idlerpgcontrol:*:*:{
     }
     elseif ($did = 8) {
       if (%idle.chnick && %idle.choption && $address(Idle,0)) {
-        .msg Idle jump %idle.chnick %idle.choption
+        .msg Idle jump %idle.chnick $+ : $+ %idle.choption
       }
       else {
         halt
