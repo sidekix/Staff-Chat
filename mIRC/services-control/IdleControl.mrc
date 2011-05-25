@@ -186,3 +186,32 @@ on ^*:OPEN:?:*: {
     idle.sync
   }
 }
+
+alias idle.sync {
+  if (%idle.me && !%idle.sync) {
+    idlerpg
+    did -b idlerpg 107-112
+    did -ra idlerpg 108,110,112 Lade Daten ...
+    set %idle.sync $calc($gmt + $iif($1,$1,10))
+    set %idle.syncx 1
+    closemsg Idle
+    .msg idle status %idle.me 
+  }
+}
+alias idlerpg.init {
+  did -ra idlerpg 102 %idle.me
+  did -ra idlerpg 104 $iif($me ison #idlerpg.scn,$iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1),-),-)
+  did -ra idlerpg 106 $iif(%idle.level,%idle.level,-)
+  did - $+ $iif(!%idle.me || !%idle.pass,ub,e) $+ $iif(%idle.autol,c,u) idlerpg 205
+  set %idle.me $did(idlerpg,202).text
+  set %idle.pass $did(idlerpg,204).text
+  if (!$me ison #idlerpg.scn) {
+    did -b idlerpg 206
+  }
+  if ($calc(%idle.sync - $gmt) <= 0) {
+    unset %idle.sync
+  }
+  did $iif(%idle.syncx,-b,-e) idlerpg 107-112
+  did $iif(%idle.sync,-rab,-rae) idlerpg 113 $iif(%idle.sync,Bitte warten ... $calc(%idle.sync - $gmt),Neu syncronisieren)
+  did -ra idlerpg 110 $iif(!%idle.syncx,$duration($calc($gmt + %idle.ti)),Lade Daten ...)
+}
