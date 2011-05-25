@@ -269,36 +269,27 @@ on ^*:OPEN:?:*: {
 : #      I-Control $devents    #
 ; ##############################
 
-on *:DIALOG:idle.kampf:init:*: {
-  if (%idle.level !isnum) {
-    did -rab idle.kampf 5 Warte auf Daten ...
-  }
-  did -b idle.kampf 7,8
-}
-on *:DIALOG:idle.kampf:sclick:*: {
-  if ($did == 8) {
-    .msg Idle fight $did(3).text
-  }
-  if ($did == 9) {
-    unset %idle.kampf.nick
-    dialog -x idle.kampf
-  }
-}
-
 on 1:dialog:idlerpgcontrol:*:*:{
   ; ############################ Anfang von $devent = init
-  if $devent = init { 
+  if $devent = init {
     join #idlerpg.scn
     idle.login
     idlerpgcontrol.init
     idle.sync
     .timeridlerpgcontrol 0 0 idlerpgcontrol.init
     did $iif(%idle.title,-c,-u) idlerpgcontrol 20
-  } 
+  }
   ; ############################ Ende von $devent = init
   ; ############################ Anfang von $devent = sclick
   elseif $devent = sclick {
-    if ($did == 205) {
+    if ($did == 1) {
+      idlerpgcontrol.init
+      .timeridlerpgcontrol off
+      unset %idle.chnick
+      unset %idle.choption
+      unset %idle.fight.nick
+    }
+    elseif ($did == 205) {
       set %idle.alogin $did(205).state
     }
     elseif ($did == 206) {
@@ -315,17 +306,49 @@ on 1:dialog:idlerpgcontrol:*:*:{
       .timerrpgtitle $iif($did(208).state == 1,0 1 title.idlerpgcontrol,off)
       titlebar $iif($did(208).state == 1,$iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1) bis zum Levelup,),)
     }
+    ; ############################ Cheat buttons
+    elseif ($did = 10) {
+      if ($address(Idle,0)) {
+        .msg Idle hog
+      }
+      else {
+        halt
+      }
+    }
+    elseif ($did = 11) {
+      if (%idle.chnick && %idle.choption && $address(Idle,0)) {
+        .msg Idle push %idle.chnick %idle.choption
+      }
+      else {
+        halt
+      }
+    }
+    ; ############################ Cheat buttons ende
   }
   ; ############################ Ende von $devent = sclick
   ; ############################ Anfang von $devent = edit
   elseif $devent == edit {
+    if ($did = 27) {
+      if ($did(27).text == $null) {
+        unset %idle.chnick
+      }
+      set %idle.chnick $did(27).text 
+    }
+    if ($did = 28) {
+      if ($did(28).text == $null) {
+        unset %idle.choption
+      }
+      set %idle.choption $did(28).text 
+    }
   }
   ; ############################ Ende von $devent = edit
   ; ############################ Anfang von $devent = close
   elseif $devent == close {
     idlerpgcontrol.init
     .timeridlerpgcontrol off
+    unset %idle.chnick
+    unset %idle.choption
+    unset %idle.fight.nick
   }
   ; ############################ Ende von $devent = close
-}
-  
+}  
