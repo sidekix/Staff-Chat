@@ -92,7 +92,7 @@ alias idlerpgcontrol {
   }
 }
 alias title.idlerpgcontrol {
-  titlebar $iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1) until next level,)
+  titlebar $iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1) bis zum Levelup,)
   if ($calc(%idle.nl - $gmt) == %idle.titlewarn) {
     echo -a4NOTICE! YOU LEVEL UP IN 30 MINUTES
   }
@@ -287,35 +287,48 @@ on *:DIALOG:idle.kampf:sclick:*: {
     dialog -x idle.kampf
   }
 }
-on *:DIALOG:idlerpgcontrol:init:*: {
-  join #idlerpg.scn
-  idle.login
-  idlerpgcontrol.init
-  idle.sync
-  .timeridlerpgcontrol 0 0 idlerpgcontrol.init
-  did $iif(%idle.title,-c,-u) idlerpgcontrol 208
-}
-on *:DIALOG:idlerpgcontrol:sclick:*: {
-  if ($did == 205) {
-    set %idle.alogin $did(205).state
-  }
-  if ($did == 206) {
+
+on 1:dialog:idlerpgcontrol:*:*:{
+  ; ############################ Anfang von $devent = init
+  if $devent = init { 
+    join #idlerpg.scn
     idle.login
-  }
-  if ($did == 113) {
+    idlerpgcontrol.init
     idle.sync
-  }
-  if ($did == 208) {
-    if ($did(208).state == 0) {
-      unset %idle.timewarn
+    .timeridlerpgcontrol 0 0 idlerpgcontrol.init
+    did $iif(%idle.title,-c,-u) idlerpgcontrol 20
+  } 
+  ; ############################ Ende von $devent = init
+  ; ############################ Anfang von $devent = sclick
+  elseif $devent = sclick {
+    if ($did == 205) {
+      set %idle.alogin $did(205).state
     }
-    set %idle.title $did(208).state
-    .timerrpgtitle $iif($did(208).state == 1,0 1 title.idlerpgcontrol,off)
-    titlebar $iif($did(208).state == 1,$iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1) bis zum Levelup,),)
+    elseif ($did == 206) {
+      idle.login
+    }
+    elseif ($did == 113) {
+      idle.sync
+    }
+    elseif ($did == 208) {
+      if ($did(208).state == 0) {
+        unset %idle.timewarn
+      }
+      set %idle.title $did(208).state
+      .timerrpgtitle $iif($did(208).state == 1,0 1 title.idlerpgcontrol,off)
+      titlebar $iif($did(208).state == 1,$iif($calc(%idle.nl - $gmt) >= 0,$duration($calc(%idle.nl - $gmt),1) bis zum Levelup,),)
+    }
   }
-}
-on *:DIALOG:idlerpgcontrol:close:*: {
-  idlerpgcontrol.init
-  .timeridlerpgcontrol off
+  ; ############################ Ende von $devent = sclick
+  ; ############################ Anfang von $devent = edit
+  elseif $devent == edit {
+  }
+  ; ############################ Ende von $devent = edit
+  ; ############################ Anfang von $devent = close
+  elseif $devent == close {
+    idlerpgcontrol.init
+    .timeridlerpgcontrol off
+  }
+  ; ############################ Ende von $devent = close
 }
   
