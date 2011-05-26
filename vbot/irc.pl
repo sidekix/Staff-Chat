@@ -99,6 +99,7 @@ use lib::worker::heise;     $worker->{'heise'}    = lib::worker::heise->new($con
 use lib::worker::ping;      $worker->{'ping'}     = lib::worker::ping->new($conn);
 use lib::worker::gbo;       $worker->{'gbo'}      = lib::worker::gbo->new($conn);
 use lib::worker::caschy;    $worker->{'caschy'}   = lib::worker::caschy->new($conn);
+use lib::worker::apfel;     $worker->{'apfel'}    = lib::worker::apfel->new($conn);
 
 ############################################################
 my $parser = {}; # create command parsers
@@ -130,6 +131,8 @@ use lib::parser::stats;
   $parser->{'91_stats'} = lib::parser::stats->new();
 use lib::parser::caschy;
   $parser->{'16_caschy'} = lib::parser::caschy->new();
+use lib::parser::apfel;
+  $parser->{'17_apfel'} = lib::parser::apfel->new();
 
 # non default
 if (HAL_CONVERSATION) {
