@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r117
+; # SCN X-Control 1.0 r120
 ; # (c) Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -23,22 +23,28 @@ menu * {
 
 dialog -l scndcontrol {
   title "Denora Control"
-  size -1 -1 106 177
+  size -1 -1 178 179
   option dbu
   button "Schliessen", 1, 2 163 37 12, default ok cancel
-  button "Neustarten", 2, 13 68 30 12, flat
-  button "Status", 3, 13 54 30 12, flat
-  button "Logout", 4, 13 40 30 12, flat
-  button "Login", 5, 13 26 30 12, flat
-  box "Main", 6, 7 17 42 84
-  box "Module", 7, 52 17 42 84
-  button "Modload", 8, 57 26 30 12, flat
-  button "Modunload", 9, 57 40 30 12, flat
-  button "Mod List", 10, 57 54 30 12, flat
-  button "Mod Info", 11, 57 68 30 12, flat
-  box "Denora beenden", 12, 7 104 87 45
-  button "BEENDEN", 13, 21 116 56 21, flat
-  button "Reload", 14, 13 82 30 12, flat
-  edit "Denora 1.0 r4", 15, 52 164 50 10, disable
+  button "Neustarten", 2, 10 52 30 12, flat
+  button "Status", 3, 10 39 30 12, flat
+  button "Logout", 4, 10 26 30 12, flat
+  button "Login", 5, 10 13 30 12, flat
+  box "Main", 6, 4 3 42 82
+  box "Module", 7, 49 3 42 68
+  button "Modload", 8, 55 13 30 12, flat
+  button "Modunload", 9, 55 26 30 12, flat
+  button "Mod List", 10, 55 39 30 12, flat
+  button "Mod Info", 11, 55 52 30 12, flat
+  box "Shutdown", 12, 49 73 42 30
+  button "BEENDEN", 13, 55 84 30 12, flat
+  button "Reload", 14, 10 65 30 12, flat
+  edit "Denora 1.0 r7", 15, 125 165 50 10, disable
+  box "Set", 16, 4 87 43 61
+  radio "An", 17, 6 95 20 10
+  radio "Aus", 18, 25 95 20 10
+  button "HTML", 19, 7 106 37 12, flat
+  button "SQL", 20, 7 119 37 12, flat
+  button "Debug", 21, 7 132 37 12, flat
 }
 
