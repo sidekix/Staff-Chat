@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r130
+; # SCN X-Control 1.0 r131
 ; # (c) Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -39,7 +39,7 @@ dialog -l scndcontrol {
   box "Shutdown", 12, 93 3 61 30
   button "BEENDEN", 13, 109 14 30 12, flat
   button "Reload", 14, 10 65 30 12, flat
-  edit "Denora 1.0 r17", 15, 105 168 50 10, disable
+  edit "Denora 1.0 r18", 15, 105 168 50 10, disable
   box "Set", 16, 4 89 87 35
   radio "An", 17, 18 95 20 10
   radio "Aus", 18, 56 95 20 10
@@ -133,7 +133,50 @@ on 1:dialog:scndcontrol:*:*:{
       ; -----------
     }
     else {
-      ; ---- alle befehle nochmal ohne debug messages
+      if ($did isnum 1) {
+        if $did = 1 {
+          ; --- Schliessen Button
+          .unset %dcontrolset
+        }
+      }
+      ; ------- did 2-16
+      if ($did isnum 17-18) {
+        ; Denora Set 3 Buttons, 2 Radio Buttons
+        if $did = 17 {
+          ; --- Radio Button AN
+          set %dcontrolset on
+        }
+        elseif $did = 18 {
+          ; --- Radio Button Aus
+          set %dcontrolset off
+        }
+      }
+      elseif ($did isnum 19-21) {
+        if $did = 19  {
+          if (!%dcontrolset) {
+            halt
+          }
+          elseif (%dcontrolset) {
+            .msg denora set HTML %dcontrolset
+          }
+        }
+        if $did = 20  {
+          if (!%dcontrolset) {
+            halt
+          }
+          elseif (%dcontrolset) {
+            .msg denora set sql %dcontrolset
+          }
+        }
+        if $did = 21  {
+          if (!%dcontrolset) {
+            halt
+          }
+          elseif (%dcontrolset) {
+            .msg denora set sql %dcontrolset
+          }
+        }
+      }
     }
   }
   ; ############################ Ende von $devent = sclick
