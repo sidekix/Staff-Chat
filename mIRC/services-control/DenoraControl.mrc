@@ -1,29 +1,44 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r131
-; # (c) Staff-Chat
+; # SCN X-Control 1.0 r133
+; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
 ; #
 ; #############################################
 
+; #######
+: # Menus 
+; #######
 
-; ####################
-: # Menu´s 
-; ####################
 menu * {
   SCN X-Control
-  .SCN D-Control: { dialog -m scndcontrol scndcontrol }
+  .D-Control
+  ..Debug
+  ...An/Aus: {
+    if (!%xcontroldebug) || (%xcontroldebug == off) {
+      set %xcontroldebug on
+      echo -ta [xcontrol-debug] var gesetzt... AN
+      set %xcontroldebugchan $$?="DebugChannel mit '#' angeben..."
+    }
+    elseif (%xcontroldebug == on) {
+      .set %xcontroldebug off
+    echo -ta [xcontrol-debug] AUS }
+    .unset %%xcontroldebugchan
+    else { halt }
+  }
+  ...-
+  ...D-Control: { dialog -m scndcontrol scndcontrol }
   -
 }
 
-; #######################
+; ###########
 : # D-Control 
-; #######################
+; ###########
 
 dialog -l scndcontrol {
   title "Denora Control"
-  size -1 -1 159 179
+  size -1 -1 178 179
   option dbu
   button "Schliessen", 1, 2 163 37 12, default ok cancel
   button "Neustarten", 2, 10 52 30 12, flat
@@ -31,44 +46,34 @@ dialog -l scndcontrol {
   button "Logout", 4, 10 26 30 12, flat
   button "Login", 5, 10 13 30 12, flat
   box "Main", 6, 4 3 42 82
-  box "Module", 7, 49 3 42 82
+  box "Module", 7, 49 3 42 68
   button "Modload", 8, 55 13 30 12, flat
-  button "Modunload", 9, 55 30 30 12, flat
-  button "Mod List", 10, 55 47 30 12, flat
-  button "Mod Info", 11, 55 64 30 12, flat
-  box "Shutdown", 12, 93 3 61 30
-  button "BEENDEN", 13, 109 14 30 12, flat
+  button "Modunload", 9, 55 26 30 12, flat
+  button "Mod List", 10, 55 39 30 12, flat
+  button "Mod Info", 11, 55 52 30 12, flat
+  box "Shutdown", 12, 49 73 42 30
+  button "BEENDEN", 13, 55 84 30 12, flat
   button "Reload", 14, 10 65 30 12, flat
-  edit "Denora 1.0 r18", 15, 105 168 50 10, disable
-  box "Set", 16, 4 89 87 35
-  radio "An", 17, 18 95 20 10
-  radio "Aus", 18, 56 95 20 10
-  button "HTML", 19, 6 106 27 12, flat
-  button "SQL", 20, 34 106 27 12, flat
-  button "Debug", 21, 62 106 26 12, flat
-  box "Exlude", 22, 4 126 87 36
-  button "Add", 23, 7 134 24 12, flat
-  button "Del", 24, 35 134 24 12, flat
-  button "List", 25, 63 134 24 12, flat
-  edit "", 26, 7 149 81 10, limit 13 center
-  box "Admin", 27, 94 35 60 104
-  button "Add", 28, 107 43 37 12, flat
-  button "Del", 29, 107 57 37 12, flat
-  button "SetPass", 30, 107 70 37 12, flat
-  button "Show", 31, 107 83 37 12, flat
-  button "List", 32, 107 96 37 12, flat
-  edit "", 33, 98 113 50 10, limit 13 center
-  edit "", 34, 98 123 50 10, limit 13 center
+  edit "Denora 1.0 r20", 15, 125 165 50 10, disable
+  box "Set", 16, 4 87 43 61
+  radio "An", 17, 6 95 20 10
+  radio "Aus", 18, 25 95 20 10
+  button "HTML", 19, 7 106 37 12, flat
+  button "SQL", 20, 7 119 37 12, flat
+  button "Debug", 21, 7 132 37 12, flat
 }
 
-; ##############################
+; ######################
 : # D-Control $devents #
-; ##############################
+; ######################
 
 on 1:dialog:scndcontrol:*:*:{
   ; ############################ Anfang von $devent = init
   if $devent = init {
-
+    if (%xcontroldebug == on) && (!%xcontroldebugchan) {
+      echo -ta KEIN Ausgabechannel fuer die Debugmessages gesetzt !!
+      timerxclose 1 1 dialog -x scndcontrol scndcontrol
+    }
   }
   ; ############################ Ende von $devent = init
   ; ############################ Anfang von $devent = sclick
@@ -77,55 +82,55 @@ on 1:dialog:scndcontrol:*:*:{
       if ($did isnum 1) {
         if $did = 1 {
           ; --- Schliessen Button
-          msg #sidekix [xcontrol-debug] Loesche Vars...
+          msg %xcontroldebugchan [xcontrol-debug] Loesche Vars...
           .unset %dcontrolset
-          msg #sidekix [xcontrol-debug] Schliesse D-Control Dialog
+          msg %xcontroldebugchan [xcontrol-debug] Schliesse D-Control Dialog
         }
       }
       ; ------- did 2-16
       if ($did isnum 17-18) {
         ; Denora Set 3 Buttons, 2 Radio Buttons
-        msg #sidekix [xcontrol-debug] Radio Button
+        msg %xcontroldebugchan [xcontrol-debug] Radio Button
         if $did = 17 {
           ; --- Radio Button AN
-          msg #sidekix [xcontrol-debug] radio 1 == An
+          msg %xcontroldebugchan [xcontrol-debug] radio 1 == An
           set %dcontrolset on
         }
         elseif $did = 18 {
           ; --- Radio Button Aus
-          msg #sidekix [xcontrol-debug] radio 2 == Aus
+          msg %xcontroldebugchan [xcontrol-debug] radio 2 == Aus
           set %dcontrolset off
         }
       }
       elseif ($did isnum 19-21) {
-        msg #sidekix [xcontrol-debug] D-Set
+        msg %xcontroldebugchan [xcontrol-debug] D-Set
         if $did = 19  {
           if (!%dcontrolset) {
-            msg #sidekix [xcontrol-debug] Kein Radio Button gewaehlt...
+            msg %xcontroldebugchan [xcontrol-debug] Kein Radio Button gewaehlt...
             halt
           }
           elseif (%dcontrolset) {
-            msg #sidekix [xcontrol-debug] D-Set HTML %dcontrolset
+            msg %xcontroldebugchan [xcontrol-debug] D-Set HTML %dcontrolset
             .msg denora set HTML %dcontrolset
           }
         }
         if $did = 20  {
           if (!%dcontrolset) {
-            msg #sidekix [xcontrol-debug] Kein Radio Button gewaehlt...
+            msg %xcontroldebugchan [xcontrol-debug] Kein Radio Button gewaehlt...
             halt
           }
           elseif (%dcontrolset) {
-            msg #sidekix [xcontrol-debug] D-Set SQL %dcontrolset
+            msg %xcontroldebugchan [xcontrol-debug] D-Set SQL %dcontrolset
             .msg denora set sql %dcontrolset
           }
         }
         if $did = 21  {
           if (!%dcontrolset) {
-            msg #sidekix [xcontrol-debug] Kein Radio Button gewaehlt...
+            msg %xcontroldebugchan [xcontrol-debug] Kein Radio Button gewaehlt...
             halt
           }
           elseif (%dcontrolset) {
-            msg #sidekix [xcontrol-debug] D-Set DEBUG %dcontrolset
+            msg %xcontroldebugchan [xcontrol-debug] D-Set DEBUG %dcontrolset
             .msg denora set sql %dcontrolset
           }
         }
@@ -191,3 +196,4 @@ on 1:dialog:scndcontrol:*:*:{
   }
   ; ############################ Ende von $devent = close
 }
+
