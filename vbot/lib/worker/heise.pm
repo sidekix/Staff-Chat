@@ -27,6 +27,26 @@ sub new {
       selfhtml => {
 	title => 'SELFHTML Aktuell Weblog',
 	url   => 'http://aktuell.de.selfhtml.org/weblog/atom-feed'
+      },
+      openvz => {
+	title => 'OpenVZ Livejournal',
+	url   => 'http://openvz.livejournal.com/data/atom/'
+      },
+      ruscert => {
+	title => 'RUS-Cert',
+	url   => 'http://cert.uni-stuttgart.de/ticker/rus-cert.xml'
+      },
+      wfnews => {
+	title => 'Winfuture News',
+	url   => 'http://static.winfuture.de/feeds/WinFuture-News-atom1.0.xml'
+      },
+      wfsecurity => {
+	title => 'Winfuture Security',
+	url   => 'http://static.winfuture.de/feeds/WinFuture-News-Sicherheit-atom1.0.xml'
+      },
+      golem => {
+	title => 'Golem',
+	url   => 'http://rss.golem.de/rss.php?feed=ATOM1.0'
       }
     },
   };
