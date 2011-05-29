@@ -196,7 +196,30 @@ on 1:dialog:scndcontrol:*:*:{
           .unset %dcontrolset
         }
       }
-      ; ------- did 2-16
+      ; ------- did 2-6
+      if ($did isnum 2-6) {
+        ; Denora Main 5 Buttons, 2 Textboxen
+        if $did = 2 {
+          ; --- D-Login
+          .msg denora login %dcontrolname %dcontrolpass
+        }
+        if $did = 3 {
+          ; --- D-Logout
+          .msg denora logout
+        }
+        if $did = 4 {
+          ; --- D-Status
+          .msg denora status
+        }
+        if $did = 5 {
+          ; --- D-Restart
+          .msg denora restart
+        }
+        if $did = 6 {
+          ; --- D-Reload
+          .msg denora reload
+        }
+      }
       if ($did isnum 17-18) {
         ; Denora Set 3 Buttons, 2 Radio Buttons
         if $did = 17 {
