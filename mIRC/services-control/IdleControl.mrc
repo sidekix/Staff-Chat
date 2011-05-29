@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r135
+; # SCN X-Control 1.0 r142
 ; # (c) Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net

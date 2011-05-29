@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r135
+; # SCN X-Control 1.0 r142
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -40,29 +40,48 @@ menu * {
 
 dialog -l scndcontrol {
   title "Denora Control"
-  size -1 -1 178 179
+  size -1 -1 195 179
   option dbu
   button "Schliessen", 1, 2 163 37 12, default ok cancel
-  button "Login", 2, 10 52 30 12, flat
-  button "Logout", 3, 10 39 30 12, flat
-  button "Status", 4, 10 26 30 12, flat
-  button Restart", 5, 10 13 30 12, flat
-  button "Reload", 6, 10 65 30 12, flat
-  box "Main", 7, 4 3 42 82
-  box "Module", 8, 49 3 42 68
-  button "Modload", 9, 55 13 30 12, flat
-  button "Modunload", 10, 55 26 30 12, flat
-  button "Mod List", 11, 55 39 30 12, flat
-  button "Mod Info", 12, 55 52 30 12, flat
-  box "Shutdown", 13, 49 73 42 30
-  button "BEENDEN", 14, 55 84 30 12, flat
-  edit "Denora 1.0 r22", 15, 125 165 50 10, disable
-  box "Set", 16, 4 87 43 61
-  radio "An", 17, 6 95 20 10
-  radio "Aus", 18, 25 95 20 10
-  button "HTML", 19, 7 106 37 12, flat
-  button "SQL", 20, 7 119 37 12, flat
-  button "Debug", 21, 7 132 37 12, flat
+  button "Login", 2, 88 10 25 12, flat
+  button "Logout", 3, 62 10 25 12, flat
+  button "Status", 4, 36 10 25 12, flat
+  button "Restart", 5, 10 10 25 12, flat
+  button "Reload", 6, 114 10 25 12, flat
+  box "Main", 7, 4 1 139 36
+  box "Module", 8, 4 63 139 26
+  button "Modload", 9, 8 72 30 12, flat
+  button "Modunload", 10, 41 72 30 12, flat
+  button "Mod List", 11, 74 72 30 12, flat
+  button "Mod Info", 12, 107 72 30 12, flat
+  box "Shutdown", 13, 145 1 42 30
+  button "BEENDEN", 14, 151 12 30 12, flat
+  edit "Denora 1.0 r29", 15, 136 165 50 10, disable
+  box "Set", 16, 4 38 139 23
+  radio "An", 17, 6 45 20 10
+  radio "Aus", 18, 28 45 20 10
+  button "HTML", 19, 58 44 25 12, flat
+  button "SQL", 20, 86 44 25 12, flat
+  button "Debug", 21, 114 44 25 12, flat
+  edit "Benutzername", 22, 9 24 50 10, limit 15 center
+  edit "Passwort", 23, 89 24 50 10, pass limit 15 center
+  box "Fantasy", 24, 145 31 42 58
+  button "An", 25, 151 40 30 12, flat
+  button "Aus", 26, 151 56 30 12, flat
+  button "Notice", 27, 151 72 30 12, flat
+  box "Chanstats", 28, 4 92 183 66
+  button "Add", 29, 8 100 25 10, flat
+  button "Del", 30, 34 100 25 10, flat
+  button "List", 31, 60 100 25 10, flat
+  edit "#Channel", 32, 87 100 50 10, center
+  text "SUMUSER uebertraegt alle Statistiken von Benutzer2  zu Benutzer1 UND loescht Benutzer 2", 33, 18 111 157 14, disable center
+  button "SumUser", 34, 8 126 25 10, flat
+  edit "Benutzer1", 37, 38 126 50 10, limit 15 center
+  edit "Benutzer2", 38, 91 126 50 10, limit 15 center
+  text "RENAME benennt Benutzer1 in Benutzer2 um", 39, 31 136 136 8, disable
+  button "Rename", 35, 8 144 25 10, flat
+  edit "Benutzer1", 41, 38 144 50 10, limit 15 center
+  edit "Benutzer2", 42, 91 144 50 10, limit 15 center
 }
 
 ; ######################
