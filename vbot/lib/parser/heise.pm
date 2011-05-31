@@ -40,6 +40,10 @@ use constant GOLEM_URI => {
   title => 'Golem',
   url   => 'http://rss.golem.de/rss.php?feed=ATOM1.0'
 };
+use constant DARTNET_URI => {
+  title => 'Dartnet-Inc',
+  url => 'http://blog.dartnet-inc.net/?feed=atom'
+};
 
 use constant HEISE_CHARSET    => 'utf-8';
 
@@ -67,6 +71,7 @@ sub parse {
   return 1 if ($self->wfnews($conn, $event));
   return 1 if ($self->wfsec($conn, $event));
   return 1 if ($self->golem($conn, $event));
+  return 1 if ($self->dartnet($conn, $event));
   return 0 if ($self->help($conn, $event));
 
   # found none of my commands
@@ -85,6 +90,22 @@ sub heise {
   }
   elsif ($message =~ /^!heise(\s+[0-9]+)?$/i) {
     return $self->postEntry(HEISE_OPEN_URI, $conn, $event);
+  }
+  return 0;
+}
+
+sub dartnet {
+  my $self  = shift;
+  my ($conn, $event) = @_;
+
+  my $message = $event->{args}[0];
+  my $sender  = $event->{nick};
+
+  if ($message =~ /^!dartnet(\s+)list$/i) {
+    return $self->listFeed(DARTNET_URI, $conn, $event);
+  }
+  elsif ($message =~ /^!dartnet(\s+[0-9]+)?$/i) {
+    return $self->postEntry(DARTNET_URI, $conn, $event);
   }
   return 0;
 }

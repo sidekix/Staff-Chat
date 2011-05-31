@@ -24,6 +24,10 @@ sub new {
         title => 'Heise Security',
         url   => 'http://www.heise.de/security/news/news-atom.xml'
       },
+      dartnet => {
+	title => 'Darnet Inc.',
+	url   => 'http://blog.dartnet-inc.net/?feed=atom'
+      },
       selfhtml => {
 	title => 'SELFHTML Aktuell Weblog',
 	url   => 'http://aktuell.de.selfhtml.org/weblog/atom-feed'
