@@ -99,6 +99,17 @@ use lib::worker::heise;     $worker->{'heise'}    = lib::worker::heise->new($con
 use lib::worker::ping;      $worker->{'ping'}     = lib::worker::ping->new($conn);
 use lib::worker::gbo;       $worker->{'gbo'}      = lib::worker::gbo->new($conn);
 use lib::worker::caschy;    $worker->{'caschy'}   = lib::worker::caschy->new($conn);
+use lib::worker::apfel;     $worker->{'apfel'}    = lib::worker::apfel->new($conn);
+use lib::worker::dau;     $worker->{'dau'}    = lib::worker::dau->new($conn);
+use lib::worker::deb;     $worker->{'deb'}    = lib::worker::deb->new($conn);
+use lib::worker::exploit;     $worker->{'exploit'}    = lib::worker::exploit->new($conn);
+use lib::worker::gulli;     $worker->{'gulli'}    = lib::worker::gulli->new($conn);
+use lib::worker::huschi;     $worker->{'huschi'}    = lib::worker::huschi->new($conn);
+use lib::worker::ibash;     $worker->{'ibash'}    = lib::worker::ibash->new($conn);
+use lib::worker::kernel;     $worker->{'kernel'}    = lib::worker::kernel->new($conn);
+use lib::worker::lwn;     $worker->{'lwn'}    = lib::worker::lwn->new($conn);
+use lib::worker::nagios;     $worker->{'nagios'}    = lib::worker::nagios->new($conn);
+use lib::worker::ssec;     $worker->{'ssec'}    = lib::worker::ssec->new($conn);
 
 ############################################################
 my $parser = {}; # create command parsers
@@ -130,6 +141,26 @@ use lib::parser::stats;
   $parser->{'91_stats'} = lib::parser::stats->new();
 use lib::parser::caschy;
   $parser->{'16_caschy'} = lib::parser::caschy->new();
+use lib::parser::daujones;
+  $parser->{'17_daujones'} = lib::parser::daujones->new();
+use lib::parser::debian;
+  $parser->{'18_debian'} = lib::parser::debian->new();
+use lib::parser::exploit;
+  $parser->{'19_exploit'} = lib::parser::exploit->new();
+use lib::parser::gulli;
+  $parser->{'20_gulli'} = lib::parser::gulli->new();
+use lib::parser::huschi;
+  $parser->{'21_huschi'} = lib::parser::huschi->new();
+use lib::parser::ibash;
+  $parser->{'22_ibash'} = lib::parser::ibash->new();
+use lib::parser::kernel;
+  $parser->{'23_kernel'} = lib::parser::kernel->new();
+use lib::parser::lwn;
+  $parser->{'24_lwn'} = lib::parser::lwn->new();
+use lib::parser::nagios;
+  $parser->{'25_nagios'} = lib::parser::nagios->new();
+use lib::parser::ssec;
+  $parser->{'26_ssec'} = lib::parser::ssec->new();
 
 # non default
 if (HAL_CONVERSATION) {

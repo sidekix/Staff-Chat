@@ -20,6 +20,30 @@ use constant SELFHTML_URI => {
   title => 'SELFHTML Aktuell Weblog',
   url   => 'http://aktuell.de.selfhtml.org/weblog/atom-feed'
 };
+use constant OPENVZ_URI => {
+  title => 'OpenVZ Livejournal',
+  url   => 'http://openvz.livejournal.com/data/atom/'
+};
+use constant RUSCERT_URI => {
+  title => 'RUS-Cert',
+  url   => 'http://cert.uni-stuttgart.de/ticker/rus-cert.xml'
+};
+use constant WFNEWS_URI => {
+  title => 'Winfuture News',
+  url   => 'http://static.winfuture.de/feeds/WinFuture-News-atom1.0.xml'
+};
+use constant WFSEC_URI => {
+  title => 'Winfuture Security',
+  url   => 'http://static.winfuture.de/feeds/WinFuture-News-Sicherheit-atom1.0.xml'
+};
+use constant GOLEM_URI => {
+  title => 'Golem',
+  url   => 'http://rss.golem.de/rss.php?feed=ATOM1.0'
+};
+use constant DARTNET_URI => {
+  title => 'Dartnet-Inc',
+  url => 'http://blog.dartnet-inc.net/?feed=atom'
+};
 
 use constant HEISE_CHARSET    => 'utf-8';
 
@@ -41,8 +65,14 @@ sub parse {
 
   return 1 if ($self->heise($conn, $event));
   return 1 if ($self->heisec($conn, $event));
-  return 0 if ($self->help($conn, $event));
+  return 1 if ($self->openvz($conn, $event));
   return 1 if ($self->selfhtml($conn, $event));
+  return 1 if ($self->ruscert($conn, $event));
+  return 1 if ($self->wfnews($conn, $event));
+  return 1 if ($self->wfsec($conn, $event));
+  return 1 if ($self->golem($conn, $event));
+  return 1 if ($self->dartnet($conn, $event));
+  return 0 if ($self->help($conn, $event));
 
   # found none of my commands
   return 0;
@@ -64,6 +94,21 @@ sub heise {
   return 0;
 }
 
+sub dartnet {
+  my $self  = shift;
+  my ($conn, $event) = @_;
+
+  my $message = $event->{args}[0];
+  my $sender  = $event->{nick};
+
+  if ($message =~ /^!dartnet(\s+)list$/i) {
+    return $self->listFeed(DARTNET_URI, $conn, $event);
+  }
+  elsif ($message =~ /^!dartnet(\s+[0-9]+)?$/i) {
+    return $self->postEntry(DARTNET_URI, $conn, $event);
+  }
+  return 0;
+}
 
 sub heisec {
   my $self  = shift;
@@ -81,6 +126,69 @@ sub heisec {
   return 0;
 }
 
+sub ruscert {
+  my $self  = shift;
+  my ($conn, $event) = @_;
+
+  my $message = $event->{args}[0];
+  my $sender  = $event->{nick};
+
+  if ($message =~ /^!ruscert(\s+)list$/i) {
+    return $self->listFeed(RUSCERT_URI, $conn, $event);
+  }
+  elsif ($message =~ /^!ruscert(\s+[0-9]+)?$/i) {
+    return $self->postEntry(RUSCERT_URI, $conn, $event);
+  }
+  return 0;
+}
+
+sub wfnews {
+  my $self  = shift;
+  my ($conn, $event) = @_;
+
+  my $message = $event->{args}[0];
+  my $sender  = $event->{nick};
+
+  if ($message =~ /^!wfnews(\s+)list$/i) {
+    return $self->listFeed(WFNEWS_URI, $conn, $event);
+  }
+  elsif ($message =~ /^!wfnews(\s+[0-9]+)?$/i) {
+    return $self->postEntry(WFNEWS_URI, $conn, $event);
+  }
+  return 0;
+}
+
+sub wfsec {
+  my $self  = shift;
+  my ($conn, $event) = @_;
+
+  my $message = $event->{args}[0];
+  my $sender  = $event->{nick};
+
+  if ($message =~ /^!wfsec(\s+)list$/i) {
+    return $self->listFeed(WFSEC_URI, $conn, $event);
+  }
+  elsif ($message =~ /^!wfsec(\s+[0-9]+)?$/i) {
+    return $self->postEntry(WFSEC_URI, $conn, $event);
+  }
+  return 0;
+}
+
+sub golem {
+  my $self  = shift;
+  my ($conn, $event) = @_;
+
+  my $message = $event->{args}[0];
+  my $sender  = $event->{nick};
+
+  if ($message =~ /^!golem(\s+)list$/i) {
+    return $self->listFeed(GOLEM_URI, $conn, $event);
+  }
+  elsif ($message =~ /^!golem(\s+[0-9]+)?$/i) {
+    return $self->postEntry(GOLEM_URI, $conn, $event);
+  }
+  return 0;
+}
 
 sub selfhtml {
   my $self  = shift;
@@ -98,6 +206,22 @@ sub selfhtml {
   return 0;
 }
 
+
+sub openvz {
+  my $self  = shift;
+  my ($conn, $event) = @_;
+
+  my $message = $event->{args}[0];
+  my $sender  = $event->{nick};
+
+  if ($message =~ /^!openvz(\s+)list$/i) {
+    return $self->listFeed(OPENVZ_URI, $conn, $event);
+  }
+  elsif ($message =~ /^!openvz(\s+[0-9]+)?$/i) {
+    return $self->postEntry(OPENVZ_URI, $conn, $event);
+  }
+  return 0;
+}
 
 sub listFeed {
   my $self  = shift;
@@ -188,6 +312,7 @@ sub help {
     push @text, "  !heisec [<nr>]       - Link f√ºr Heise Security anzeigen";
     push @text, "  !selfhtml list       - 5 neueste Headlines f√r Selfhtml Weblog anzeigen";
     push @text, "  !selfhtml [<nr>]	- Link f√r Selfhtml Weblog anzeigen";
+    push @text, "  !openvz              - OpenVZ Livejournal";
   }
   else {
     return 0;
