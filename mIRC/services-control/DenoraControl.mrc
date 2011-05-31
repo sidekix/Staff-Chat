@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r142
+; # SCN X-Control 1.0 r153
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -26,7 +26,7 @@ menu * {
     elseif (%xcontroldebug == on) {
       .set %xcontroldebug off
     echo -ta [xcontrol-debug] AUS }
-    .unset %%xcontroldebugchan
+    .unset %xcontroldebugchan
     else { halt }
   }
   ..-
@@ -56,7 +56,7 @@ dialog -l scndcontrol {
   button "Mod Info", 12, 107 72 30 12, flat
   box "Shutdown", 13, 145 1 42 30
   button "BEENDEN", 14, 151 12 30 12, flat
-  edit "Denora 1.0 r29", 15, 136 165 50 10, disable
+  edit "Denora 1.0 r40", 15, 136 165 50 10, disable
   box "Set", 16, 4 38 139 23
   radio "An", 17, 6 45 20 10
   radio "Aus", 18, 28 45 20 10
@@ -84,6 +84,27 @@ dialog -l scndcontrol {
   edit "Benutzer2", 42, 91 144 50 10, limit 15 center
 }
 
+
+; ###########
+; # Aliases #
+; ###########
+
+alias scndcontrol.login {
+  if ((%scndcontrol.nick) && (%scndcontrol.pass) && ($address(denora,0) == *!denora@denora.Staff-Chat.net)) {
+    .msg denora login %scndcontrol.nick %scndcontrol.pass
+  }
+  else {
+    echo -ta Da stimmt was nicht ... 
+  }
+}
+
+	
+alias scndcontrol.init {
+  did -ra scndcontrol 22 %scndcontrol.nick
+  set %scndcontrol.nick $did(scndcontrol,22).text
+  set %scndcontrol.pass $did(scndcontrol,23).text
+}
+
 ; ######################
 ; # D-Control $devents #
 ; ######################
@@ -94,6 +115,10 @@ on 1:dialog:scndcontrol:*:*:{
     if (%xcontroldebug == on) && (!%xcontroldebugchan) {
       echo -ta KEIN Ausgabechannel fuer die Debugmessages gesetzt !!
       timerxclose 1 1 dialog -x scndcontrol scndcontrol
+    }
+    else {
+      scndcontrol.init
+      .timerscndcontrol 0 0 scndcontrol.init
     }
   }
   ; ############################ Ende von $devent = init
@@ -110,12 +135,12 @@ on 1:dialog:scndcontrol:*:*:{
       }
       ; ------- did 2-6
       if ($did isnum 2-6) {
-        ; Denora Main 3 Buttons, 2 Radio Buttons
+        ; Denora Main 5 Buttons, 2 Textboxen
         msg %xcontroldebugchan [xcontrol-debug] D-Main
         if $did = 2 {
           ; --- D-Login
           msg %xcontroldebugchan [xcontrol-debug] D-Login
-          .msg denora login %dcontrolname %dcontrolpass
+          scndcontrol.login
         }
         if $did = 3 {
           ; --- D-Logout
@@ -220,6 +245,7 @@ on 1:dialog:scndcontrol:*:*:{
           .msg denora reload
         }
       }
+      ; -----
       if ($did isnum 17-18) {
         ; Denora Set 3 Buttons, 2 Radio Buttons
         if $did = 17 {
@@ -262,12 +288,27 @@ on 1:dialog:scndcontrol:*:*:{
   ; ############################ Ende von $devent = sclick
   ; ############################ Anfang von $devent = edit
   elseif $devent == edit {
-
+    if ($did = 22) {
+      if ($did(22).text == $null) {
+        unset %scndcontrol.nick
+      }
+      else {
+        set %scndcontrol.nick $did(22).text
+      }
+    }
+    if ($did = 23) {
+      if ($did(23).text == $null) {
+        unset %scndcontrol.pass
+      }
+      else {
+        set %scndcontrol.pass $did(23).text
+      }
+    }
   }
   ; ############################ Ende von $devent = edit
   ; ############################ Anfang von $devent = close
   elseif $devent == close {
-
+    .timerscndcontrol off
   }
   ; ############################ Ende von $devent = close
 }
