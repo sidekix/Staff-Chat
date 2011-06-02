@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r156
+; # SCN X-Control 1.0 r163
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -8,7 +8,7 @@
 ; #############################################
 
 ; #######
-; # Menus 
+; # Menus
 ; #######
 
 menu * {
@@ -35,7 +35,7 @@ menu * {
 }
 
 ; ###########
-; # D-Control 
+; # D-Control
 ; ###########
 
 dialog -l scndcontrol {
@@ -56,7 +56,7 @@ dialog -l scndcontrol {
   button "Mod Info", 12, 107 72 30 12, flat
   box "Shutdown", 13, 145 1 42 30
   button "BEENDEN", 14, 151 12 30 12, flat
-  edit "Denora 1.0 r43", 15, 140 146 50 10, disable
+  edit "Denora 1.0 r50", 15, 140 146 50 10, disable
   box "Set", 16, 4 38 139 23
   radio "An", 17, 6 45 20 10
   radio "Aus", 18, 28 45 20 10
@@ -97,11 +97,11 @@ alias scndcontrol.login {
     .msg denora login %scndcontrol.nick %scndcontrol.pass
   }
   else {
-    echo -ta Da stimmt was nicht ... 
+    echo -ta Da stimmt was nicht ...
   }
 }
 
-	
+
 alias scndcontrol.init {
   did -ra scndcontrol 22 %scndcontrol.nick
   set %scndcontrol.nick $did(scndcontrol,22).text
@@ -120,8 +120,10 @@ on 1:dialog:scndcontrol:*:*:{
       timerxclose 1 1 dialog -x scndcontrol scndcontrol
     }
     else {
+      msg %xcontroldebugchan [xcontrol-debug] D-Control geoeffnet ...
       scndcontrol.init
       .timerscndcontrol 0 0 scndcontrol.init
+      msg %xcontroldebugchan [xcontrol-debug] init.timer gestartet ...
     }
   }
   ; ############################ Ende von $devent = init
@@ -145,30 +147,29 @@ on 1:dialog:scndcontrol:*:*:{
           msg %xcontroldebugchan [xcontrol-debug] D-Login
           scndcontrol.login
         }
-        if $did = 3 {
+        elseif $did = 3 {
           ; --- D-Logout
           msg %xcontroldebugchan [xcontrol-debug] D-Logout
           .msg denora logout
         }
-        if $did = 4 {
+        elseif $did = 4 {
           ; --- D-Status
           msg %xcontroldebugchan [xcontrol-debug] D-Status
           .msg denora status
         }
-        if $did = 5 {
+        elseif $did = 5 {
           ; --- D-Restart
           msg %xcontroldebugchan [xcontrol-debug] D-Restart
           .msg denora restart
         }
-        if $did = 6 {
+        elseif $did = 6 {
           ; --- D-Reload
           msg %xcontroldebugchan [xcontrol-debug] D-Reload
           .msg denora reload
         }
       }
       ; ----
-
-      if ($did isnum 17-18) {
+      elseif ($did isnum 17-18) {
         ; Denora Set 3 Buttons, 2 Radio Buttons
         msg %xcontroldebugchan [xcontrol-debug] Radio Button
         if $did = 17 {
@@ -184,7 +185,7 @@ on 1:dialog:scndcontrol:*:*:{
       }
       elseif ($did isnum 19-21) {
         msg %xcontroldebugchan [xcontrol-debug] D-Set
-        if $did = 19  {
+        if $did = 19 {
           if (!%dcontrolset) {
             msg %xcontroldebugchan [xcontrol-debug] Kein Radio Button gewaehlt...
             halt
@@ -194,7 +195,7 @@ on 1:dialog:scndcontrol:*:*:{
             .msg denora set HTML %dcontrolset
           }
         }
-        if $did = 20  {
+        elseif $did = 20 {
           if (!%dcontrolset) {
             msg %xcontroldebugchan [xcontrol-debug] Kein Radio Button gewaehlt...
             halt
@@ -204,7 +205,7 @@ on 1:dialog:scndcontrol:*:*:{
             .msg denora set sql %dcontrolset
           }
         }
-        if $did = 21  {
+        elseif $did = 21 {
           if (!%dcontrolset) {
             msg %xcontroldebugchan [xcontrol-debug] Kein Radio Button gewaehlt...
             halt
@@ -213,6 +214,26 @@ on 1:dialog:scndcontrol:*:*:{
             msg %xcontroldebugchan [xcontrol-debug] D-Set DEBUG %dcontrolset
             .msg denora set sql %dcontrolset
           }
+        }
+      }
+      ; ------- did 25-27
+      elseif ($did isnum 25-27) {
+        ; Denora Fantasy 3 Buttons
+        msg %xcontroldebugchan [xcontrol-debug] D-Fantasy
+        if $did = 25 {
+          ; --- D-Fantasy An
+          msg %xcontroldebugchan [xcontrol-debug] D-Fantasy An
+          .msg denora chanstats set $$?"Channel?" fantasy on
+        }
+        elseif $did = 26 {
+          ; --- D-Fantasy Aus
+          .msg denora chanstats set $$?"Channel?" fantasy off
+          msg %xcontroldebugchan [xcontrol-debug] D-Fantasy Aus
+        }
+        elseif $did = 27 {
+          ; --- D-Fantasy Notice
+          .msg denora chanstats set $$?"Channel?" fantasy notice
+          msg %xcontroldebugchan [xcontrol-debug] D-Fantasy Notice
         }
       }
       ; -----------
@@ -261,7 +282,7 @@ on 1:dialog:scndcontrol:*:*:{
         }
       }
       elseif ($did isnum 19-21) {
-        if $did = 19  {
+        if $did = 19 {
           if (!%dcontrolset) {
             halt
           }
@@ -269,7 +290,7 @@ on 1:dialog:scndcontrol:*:*:{
             .msg denora set HTML %dcontrolset
           }
         }
-        if $did = 20  {
+        if $did = 20 {
           if (!%dcontrolset) {
             halt
           }
@@ -277,7 +298,7 @@ on 1:dialog:scndcontrol:*:*:{
             .msg denora set sql %dcontrolset
           }
         }
-        if $did = 21  {
+        if $did = 21 {
           if (!%dcontrolset) {
             halt
           }
@@ -311,6 +332,7 @@ on 1:dialog:scndcontrol:*:*:{
   ; ############################ Ende von $devent = edit
   ; ############################ Anfang von $devent = close
   elseif $devent == close {
+    msg %xcontroldebugchan [xcontrol-debug] Stoppe init.timer ...
     .timerscndcontrol off
   }
   ; ############################ Ende von $devent = close
