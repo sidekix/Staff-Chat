@@ -26,7 +26,7 @@ sub new {
       },
       dartnet => {
 	title => 'Darnet Inc.',
-	url   => 'http://blog.dartnet-inc.net/?feed=atom'
+	url   => 'http://blog.dartnet-inc.de/?feed=atom'
       },
       selfhtml => {
 	title => 'SELFHTML Aktuell Weblog',

@@ -42,7 +42,7 @@ use constant GOLEM_URI => {
 };
 use constant DARTNET_URI => {
   title => 'Dartnet-Inc',
-  url => 'http://blog.dartnet-inc.net/?feed=atom'
+  url => 'http://blog.dartnet-inc.de/?feed=atom'
 };
 
 use constant HEISE_CHARSET    => 'utf-8';
