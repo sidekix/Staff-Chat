@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r165
+; # SCN X-Control 1.0 r171
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -56,7 +56,7 @@ dialog -l scndcontrol {
   button "Mod Info", 12, 107 72 30 12, flat
   box "Shutdown", 13, 145 1 56 30
   button "BEENDEN", 14, 157 12 30 12, flat
-  edit "Denora 1.0 r52", 15, 149 147 50 10, disable
+  edit "Denora 1.0 r58", 15, 149 147 50 10, disable
   box "Set", 16, 4 38 139 23
   radio "An", 17, 6 45 20 10
   radio "Aus", 18, 28 45 20 10
@@ -90,6 +90,7 @@ dialog -l scndcontrol {
   edit "#Channel", 46, 150 89 45 10, center
 }
 
+
 ; ###########
 ; # Aliases #
 ; ###########
@@ -106,8 +107,18 @@ alias scndcontrol.login {
 
 alias scndcontrol.init {
   did -ra scndcontrol 22 %scndcontrol.nick
+  did -ra scndcontrol 23 %scndcontrol.pass
+  did -ra scndcontrol 35 %scndcontrol.sumnick1
+  did -ra scndcontrol 36 %scndcontrol.sumnick2
+  did -ra scndcontrol 39 %scndcontrol.remnick1
+  did -ra scndcontrol 40 %scndcontrol.remnick2
   set %scndcontrol.nick $did(scndcontrol,22).text
   set %scndcontrol.pass $did(scndcontrol,23).text
+  set %scndcontrol.sumnick1 $did(scndcontrol,35).text
+  set %scndcontrol.sumnick2 $did(scndcontrol,36).text
+  set %scndcontrol.remnick1 $did(scndcontrol,39).text
+  set %scndcontrol.renick2 $did(scndcontrol,40).text
+  set %scndcontrol.fantasychan $did(scndcontrol,46).text
 }
 
 ; ######################
@@ -137,6 +148,13 @@ on 1:dialog:scndcontrol:*:*:{
           ; --- Schliessen Button
           msg %xcontroldebugchan [xcontrol-debug] Loesche Vars...
           .unset %dcontrolset
+          .unset %scndcontrol.nick
+          .unset %scndcontrol.pass
+          .unset %scndcontrol.sumnick1
+          .unset %scndcontrol.sumnick2
+          .unset %scndcontrol.remnick1
+          .unset %scndcontrol.renick2
+          .unset %scndcontrol.fantasychan
           msg %xcontroldebugchan [xcontrol-debug] Schliesse D-Control Dialog
         }
       }
@@ -225,16 +243,16 @@ on 1:dialog:scndcontrol:*:*:{
         if $did = 25 {
           ; --- D-Fantasy An
           msg %xcontroldebugchan [xcontrol-debug] D-Fantasy An
-          .msg denora chanstats set $$?"Channel?" fantasy on
+          .msg denora chanstats set %scndcontrol.fantasychan fantasy on
         }
         elseif $did = 26 {
           ; --- D-Fantasy Aus
-          .msg denora chanstats set $$?"Channel?" fantasy off
+          .msg denora chanstats set %scndcontrol.fantasychan fantasy off
           msg %xcontroldebugchan [xcontrol-debug] D-Fantasy Aus
         }
         elseif $did = 27 {
           ; --- D-Fantasy Notice
-          .msg denora chanstats set $$?"Channel?" fantasy notice
+          .msg denora chanstats set %scndcontrol.fantasychan fantasy notice
           msg %xcontroldebugchan [xcontrol-debug] D-Fantasy Notice
         }
       }
@@ -322,7 +340,7 @@ on 1:dialog:scndcontrol:*:*:{
         set %scndcontrol.nick $did(22).text
       }
     }
-    if ($did = 23) {
+    elseif ($did = 23) {
       if ($did(23).text == $null) {
         unset %scndcontrol.pass
       }
@@ -330,10 +348,57 @@ on 1:dialog:scndcontrol:*:*:{
         set %scndcontrol.pass $did(23).text
       }
     }
+    elseif ($did = 35) {
+      if ($did(35).text == $null) {
+        unset %scndcontrol.sumnick1
+      }
+      else {
+        set %scndcontrol.sumnick1 $did(35).text
+      }
+    }
+    elseif ($did = 36) {
+      if ($did(36).text == $null) {
+        unset %scndcontrol.sumnick2
+      }
+      else {
+        set %scndcontrol.sumnick2 $did(36).text
+      }
+    }
+    elseif ($did = 39) {
+      if ($did(39).text == $null) {
+        unset %scndcontrol.remnick1
+      }
+      else {
+        set %scndcontrol.remnick1 $did(39).text
+      }
+    }
+    elseif ($did = 40) {
+      if ($did(40).text == $null) {
+        unset %scndcontrol.remnick2
+      }
+      else {
+        set %scndcontrol.remnick2 $did(40).text
+      }
+    }
+    elseif ($did = 46) {
+      if ($did(46).text == $null) {
+        unset %scndcontrol.fantasychan
+      }
+      else {
+        set %scndcontrol.fantasychan $did(46).text
+      }
+    }
   }
   ; ############################ Ende von $devent = edit
   ; ############################ Anfang von $devent = close
   elseif $devent == close {
+    msg %xcontroldebugchan [xcontrol-debug] Setze Sum/Re Vars ...
+    .set %scndcontrol.nick D-Adminnick
+    .set %scndcontrol.pass D-Adminpass
+    .set %scndcontrol.sumnick1 Benutzername1
+    .set %scndcontrol.sumnick2 Benutzername2
+    .set %scndcontrol.remnick1 Benutzername1
+    .set %scndcontrol.remnick2 Benutzername2
     msg %xcontroldebugchan [xcontrol-debug] Stoppe init.timer ...
     .timerscndcontrol off
   }
