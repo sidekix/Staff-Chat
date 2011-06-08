@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r174
+; # SCN X-Control 1.0 r176
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -56,7 +56,7 @@ dialog -l scndcontrol {
   button "Mod Info", 12, 107 72 30 12, flat
   box "Shutdown", 13, 145 1 56 30
   button "BEENDEN", 14, 157 12 30 12, flat
-  edit "Denora 1.0 r61", 15, 149 147 50 10, disable
+  edit "Denora 1.0 r63", 15, 149 147 50 10, disable
   box "Set", 16, 4 38 139 23
   radio "An", 17, 6 45 20 10
   radio "Aus", 18, 28 45 20 10
@@ -256,7 +256,6 @@ on 1:dialog:scndcontrol:*:*:{
           }
         }
       }
-      ; ------- did 25-27
       elseif ($did isnum 25-27) {
         ; Denora Fantasy 3 Buttons
         msg %xcontroldebugchan [xcontrol-debug] D-Fantasy
@@ -276,6 +275,23 @@ on 1:dialog:scndcontrol:*:*:{
           msg %xcontroldebugchan [xcontrol-debug] D-Fantasy Notice
         }
       }
+      elseif ($did isnum 29-31) {
+        ; Denora Chanstats 3 Buttons
+        msg %xcontroldebugchan [xcontrol-debug] Chanstats
+        if $did = 29 {
+          msg %xcontroldebugchan [xcontrol-debug] Chanstats add
+          .msg denora chanstats add %scndcontrol.chanstats
+        }
+        elseif $did = 30 {
+          .msg denora chanstats del %scndcontrol.chanstats
+          msg %xcontroldebugchan [xcontrol-debug] Chanstats del
+        }
+        elseif $did = 31 {
+          .msg denora chanstats list
+          msg %xcontroldebugchan [xcontrol-debug] Chanstats list
+        }
+      }
+
       ; -----------
     }
     else {
@@ -366,6 +382,14 @@ on 1:dialog:scndcontrol:*:*:{
       }
       else {
         set %scndcontrol.pass $did(23).text
+      }
+    }
+    elseif ($did = 32) {
+      if ($did(32).text == $null) {
+        unset %scndcontrol.chanstats
+      }
+      else {
+        set %scndcontrol.chanstats $did(32).text
       }
     }
     elseif ($did = 35) {
