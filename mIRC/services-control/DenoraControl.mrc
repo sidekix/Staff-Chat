@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r176
+; # SCN X-Control 1.0 r181
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -56,7 +56,7 @@ dialog -l scndcontrol {
   button "Mod Info", 12, 107 72 30 12, flat
   box "Shutdown", 13, 145 1 56 30
   button "BEENDEN", 14, 157 12 30 12, flat
-  edit "Denora 1.0 r63", 15, 149 147 50 10, disable
+  edit "Denora 1.0 r68", 15, 149 147 50 10, disable
   box "Set", 16, 4 38 139 23
   radio "An", 17, 6 45 20 10
   radio "Aus", 18, 28 45 20 10
@@ -291,7 +291,14 @@ on 1:dialog:scndcontrol:*:*:{
           msg %xcontroldebugchan [xcontrol-debug] Chanstats list
         }
       }
-
+      elseif $did = 34 {
+        msg %xcontroldebugchan [xcontrol-debug] Chanstats SumUser
+        .msg denora chanstats sumuser %scndcontrol.sumnick1 %scndcontrol.sumnick2
+      }
+      elseif $did = 38 {
+        msg %xcontroldebugchan [xcontrol-debug] Chanstats SumUser
+        .msg denora chanstats rename %scndcontrol.remnick1 %scndcontrol.remnick2
+      }
       ; -----------
     }
     else {
