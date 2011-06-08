@@ -110,6 +110,7 @@ use lib::worker::kernel;     $worker->{'kernel'}    = lib::worker::kernel->new($
 use lib::worker::lwn;     $worker->{'lwn'}    = lib::worker::lwn->new($conn);
 use lib::worker::nagios;     $worker->{'nagios'}    = lib::worker::nagios->new($conn);
 use lib::worker::ssec;     $worker->{'ssec'}    = lib::worker::ssec->new($conn);
+use lib::worker::wbslaw;   $worker->{'wbslaw'}  = lib::worker::wbslaw->new($conn);
 
 ############################################################
 my $parser = {}; # create command parsers
@@ -161,6 +162,8 @@ use lib::parser::nagios;
   $parser->{'25_nagios'} = lib::parser::nagios->new();
 use lib::parser::ssec;
   $parser->{'26_ssec'} = lib::parser::ssec->new();
+use lib::parser::wbslaw;
+  $parser->{'27_wbslaw'} = lib::parser::wbslaw->new();
 
 # non default
 if (HAL_CONVERSATION) {
