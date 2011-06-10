@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r189
+; # SCN X-Control 1.0 r190
 ; # (c) sidekix @  Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -18,11 +18,11 @@ menu * {
 }
 
 ; #######################
-; # I-Control #
+; # NAASC-Control #
 ; #######################
 
 dialog scnnaasccontrol {
-  title "NAASC (X- Control) - Not another Anope Services Control"
+  title "NAASC (X-Control) - Not another Anope Services Control"
   size -1 -1 213 147
   option dbu
   tab "Info", 1, 1 1 206 127
@@ -31,7 +31,7 @@ dialog scnnaasccontrol {
   tab "MemoServ", 4
   tab "HostServ", 5
   tab "OperServ", 7
-  edit "NAASC X-Control v1.0 r6", 6, 139 135 72 10, read
+  edit "NAASC X-Control v1.0 r7", 6, 139 135 72 10, read
   button "Schliessen", 8, 100 132 37 12, default
 }
 
