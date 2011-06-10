@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r183
+; # SCN X-Control 1.0 r189
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
