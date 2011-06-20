@@ -164,7 +164,8 @@ use lib::parser::ssec;
   $parser->{'26_ssec'} = lib::parser::ssec->new();
 use lib::parser::wbslaw;
   $parser->{'27_wbslaw'} = lib::parser::wbslaw->new();
-
+use lib::parser::apfel;
+  $parser->{'28_apfel'} = lib::parser::apfel->new();
 # non default
 if (HAL_CONVERSATION) {
   use lib::parser::hal;
