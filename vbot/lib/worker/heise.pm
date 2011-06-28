@@ -25,17 +25,21 @@ sub new {
         url   => 'http://www.heise.de/security/news/news-atom.xml'
       },
       dartnet => {
-	title => 'Darnet Inc.',
+	title => 'Dartnet Inc.',
 	url   => 'http://blog.dartnet-inc.de/?feed=atom'
       },
+      scn => {
+	title => 'SCN News',
+	url   => 'http://www.staff-chat.net/news/?feed=atom'
+      }
       selfhtml => {
 	title => 'SELFHTML Aktuell Weblog',
 	url   => 'http://aktuell.de.selfhtml.org/weblog/atom-feed'
       },
-      openvz => {
-	title => 'OpenVZ Livejournal',
-	url   => 'http://openvz.livejournal.com/data/atom/'
-      },
+#      openvz => {
+#	title => 'OpenVZ Livejournal',
+#	url   => 'http://openvz.livejournal.com/data/atom/'
+#      },
       ruscert => {
 	title => 'RUS-Cert',
 	url   => 'http://cert.uni-stuttgart.de/ticker/rus-cert.xml'
