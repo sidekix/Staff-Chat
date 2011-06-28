@@ -20,10 +20,10 @@ use constant SELFHTML_URI => {
   title => 'SELFHTML Aktuell Weblog',
   url   => 'http://aktuell.de.selfhtml.org/weblog/atom-feed'
 };
-use constant SCN_URI => {
-  title => 'SCN-News',
-  url => 'http://www.staff-chat.net/news/?feed=atom'
-};
+#use constant SCN_URI => {
+#  title => 'SCN-News',
+#  url => 'http://www.staff-chat.net/news/?feed=atom'
+#};
 
 #use constant OPENVZ_URI => {
 #  title => 'OpenVZ Livejournal',
@@ -71,7 +71,7 @@ sub parse {
   return 1 if ($self->heise($conn, $event));
   return 1 if ($self->heisec($conn, $event));
 #  return 1 if ($self->openvz($conn, $event));
-  return 1 if ($self->scn($conn, $event));
+#  return 1 if ($self->scn($conn, $event));
   return 1 if ($self->selfhtml($conn, $event));
   return 1 if ($self->ruscert($conn, $event));
   return 1 if ($self->wfnews($conn, $event));
@@ -100,21 +100,21 @@ sub heise {
   return 0;
 }
 
-sub heise {
-  my $self  = shift;
-  my ($conn, $event) = @_;
-
-  my $message = $event->{args}[0];
-  my $sender  = $event->{nick};
-
-  if ($message =~ /^!scn(\s+)list$/i) {
-    return $self->listFeed(SCN_URI, $conn, $event);
-  }
-  elsif ($message =~ /^!scn(\s+[0-9]+)?$/i) {
-    return $self->postEntry(SCN_URI, $conn, $event);
-  }
-  return 0;
-}
+#sub scn {
+#  my $self  = shift;
+#  my ($conn, $event) = @_;
+#
+#  my $message = $event->{args}[0];
+#  my $sender  = $event->{nick};
+#
+#  if ($message =~ /^!scn(\s+)list$/i) {
+#    return $self->listFeed(SCN_URI, $conn, $event);
+#  }
+#  elsif ($message =~ /^!scn(\s+[0-9]+)?$/i) {
+#    return $self->postEntry(SCN_URI, $conn, $event);
+#  }
+#  return 0;
+#}
 
 sub dartnet {
   my $self  = shift;

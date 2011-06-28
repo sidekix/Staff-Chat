@@ -28,10 +28,10 @@ sub new {
 	title => 'Dartnet Inc.',
 	url   => 'http://blog.dartnet-inc.de/?feed=atom'
       },
-      scn => {
-	title => 'SCN News',
-	url   => 'http://www.staff-chat.net/news/?feed=atom'
-      }
+#      scn => {
+#	title => 'SCN News',
+#	url   => 'http://www.staff-chat.net/news/?feed=atom'
+#      },
       selfhtml => {
 	title => 'SELFHTML Aktuell Weblog',
 	url   => 'http://aktuell.de.selfhtml.org/weblog/atom-feed'
