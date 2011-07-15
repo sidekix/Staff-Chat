@@ -100,6 +100,7 @@ use lib::worker::ping;      $worker->{'ping'}     = lib::worker::ping->new($conn
 use lib::worker::gbo;       $worker->{'gbo'}      = lib::worker::gbo->new($conn);
 use lib::worker::caschy;    $worker->{'caschy'}   = lib::worker::caschy->new($conn);
 use lib::worker::apfel;     $worker->{'apfel'}    = lib::worker::apfel->new($conn);
+use lib::worker::google;    $worker->{'google'} = lib::worker::google->new($conn);
 use lib::worker::dau;     $worker->{'dau'}    = lib::worker::dau->new($conn);
 use lib::worker::deb;     $worker->{'deb'}    = lib::worker::deb->new($conn);
 use lib::worker::exploit;     $worker->{'exploit'}    = lib::worker::exploit->new($conn);
@@ -111,6 +112,7 @@ use lib::worker::lwn;     $worker->{'lwn'}    = lib::worker::lwn->new($conn);
 use lib::worker::nagios;     $worker->{'nagios'}    = lib::worker::nagios->new($conn);
 use lib::worker::ssec;     $worker->{'ssec'}    = lib::worker::ssec->new($conn);
 use lib::worker::wbslaw;   $worker->{'wbslaw'}  = lib::worker::wbslaw->new($conn);
+#use lib::worker::scn;    $worker->{'scn'} = lib::worker::scn->new($conn);
 
 ############################################################
 my $parser = {}; # create command parsers
@@ -166,6 +168,9 @@ use lib::parser::wbslaw;
   $parser->{'27_wbslaw'} = lib::parser::wbslaw->new();
 use lib::parser::apfel;
   $parser->{'28_apfel'} = lib::parser::apfel->new();
+use lib::parser::google;
+  $parser->{'29_google'} = lib::parser::google->new();
+
 # non default
 if (HAL_CONVERSATION) {
   use lib::parser::hal;

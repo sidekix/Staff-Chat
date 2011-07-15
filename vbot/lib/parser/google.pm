@@ -1,21 +1,22 @@
 package lib::parser::google;
 
 use strict;
-use Encode;
-use WWW::Mechanize;
+use LWP::Simple;
+use XML::RSS;
+use Text::Iconv;
 use Time::HiRes qw( sleep );
 
 use lib::config;
-use lib::core::log;
-use lib::core::state;
+use constant GOOGLE_URI => 'http://feeds.feedburner.com/insidegoogleplus2011?format=xml';
 
-use constant GOOGLE_CHARSET => 'utf-8';
-use constant GOOGLE_URL     => 'http://www.google.de/advanced_search?hl=de';
+use constant HEISEC_CHARSET    => 'utf-8';
 
 sub new {
   my $class = shift;
 
-  my $self  = { };
+  my $self  = {
+    iconv => Text::Iconv->new(HEISEC_CHARSET, IRC_CHARSET),
+  };
   bless $self, $class;
 
   return $self;
@@ -31,7 +32,10 @@ sub parse {
   return 1 if ($self->google($conn, $event));
   return 0 if ($self->help($conn, $event));
 
+  # found none of my commands
+  return 0;
 }
+
 
 sub google {
   my $self  = shift;
@@ -40,75 +44,21 @@ sub google {
   my $message = $event->{args}[0];
   my $sender  = $event->{nick};
 
-  return 0 unless ($message =~ /^!(google|suche)\s+((\d*)\s+)?(.+)$/i);
-  return 0 unless (lock('google'));
-  my $sitesearch = ($1 eq 'suche')?1:0;
-  my $display = $3 || 1; $display = 10 if $display > 10;
-  my $query = $4;
+  return 0 unless ($message =~ /^!google$/i);
 
-  FORUM_INDEX_URI =~ m/http:\/\/(www\.)?([^\/]+)/;
-  my $domain = $2;
+  # get and parse RSS feed
+  my $feed = get(GOOGLE_URI);
+  return 0 unless $feed;
 
-  eval {
-    local $SIG{ALRM} = sub {
-      errorlog('google query timed out!', __FILE__);
-      unlock ('google');
-      $conn->privmsg($conn->{channel}, "Google antwortete nicht schnell genug.");
-      return 0;
-    };
-    alarm 25;
+  my $rss = new XML::RSS;
+  $rss->parse($feed);
 
-    my $mech = WWW::Mechanize->new();
-    $mech->get(GOOGLE_URL);
-    $mech->submit_form(
-      form_name => 'f',
-      fields    => {
-        as_q          => $query,
-        as_sitesearch => ($sitesearch)?$domain:''
-      },
-      button    => 'btnG'
-    );
-    alarm 0;
-
-    my @links;
-    my $length = 0;
-    my $count = 1;
-    foreach my $link (@{$mech->links}) {
-      if ((@{$link}[5]->{'class'} || '') eq 'l') {
-        my $url   = @{$link}[0];
-        my $name  = @{$link}[1];
-        if (length $name > 30) {
-          $name = substr($name, 0, 27);
-          $name .= '...';
-        }
-
-        push @links, [ $name, $url ];
-        $length = length $name if (length $name > $length);
-
-        # display first only
-        last if $count++ == $display;
-      }
-    }
-
-    $count = 1;
-    foreach my $link (@links) {
-      my $name = $link->[0];
-      my $url  = $link->[1];
-      if ($count++ == 1) {
-        $conn->privmsg($conn->{channel}, sprintf(
-          '%'.$length.'s: %s', encode(IRC_CHARSET, $name), encode(IRC_CHARSET, $url)));
-      }
-      else {
-        $conn->notice($sender, sprintf(
-          '%'.$length.'s: %s', encode(IRC_CHARSET, $name), encode(IRC_CHARSET, $url)));
-      }
-      sleep IRC_DELAY;
-    }
-  };
-
-
+  $conn->privmsg($conn->{channel},
+    sprintf ("Posting \"%s\": %s",
+      $self->{iconv}->convert($rss->{items}[0]->{title}),
+      $self->{iconv}->convert($rss->{items}[0]->{link})
+  ));
   # return success
-  unlock('google');
   return 1;
 }
 
@@ -121,16 +71,11 @@ sub help {
 
   my   @text;
   if ($message =~ /^!hilfe\s*$/i) {
-    push @text, "!hilfe google    - Besser finden mit ".BOT_NICKNAME;
+    push @text, "!hilfe apfel     - Forum und aktuelle Threads";
   }
-  elsif ($message =~ /^!hilfe\s+google\b$/i) {
-    push @text, "Google-Kommandos:";
-    push @text, "  !google [<n>] <Suchmuster> - Sucht die n besten Treffer bei Google";
-    push @text, "  !suche  [<n>] <Suchmuster> - wie !google, aber Suche nur im Forum";
-  }
-  elsif ($message =~ /^!hilfe\s+forum\b$/i) {
-    push @text, "  !suche [<n>] <Suchmuster>";
-    push @text, "                       - Sucht die n besten Threads im Forum";
+  elsif ($message =~ /^!hilfe\s+apfel\b$/i) {
+    push @text, "Apfeleimer-Kommandos:";
+    push @text, "  !apfel          - Link zum letzten Posting";
   }
   else {
     return 0;
@@ -146,3 +91,4 @@ sub help {
 }
 
 1;
+
