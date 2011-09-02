@@ -1,6 +1,6 @@
 ; #############################################
 ; #
-; # SCN X-Control 1.0 r208
+; # SCN X-Control 1.0 r209
 ; # (c) sidekix @ Staff-Chat
 ; #
 ; # IRC @ irc.staff-chat.net
@@ -134,13 +134,13 @@ dialog scnnaasccontrol {
   button "Neu", 113, 150 24 27 12, tab 4
   button "Mail", 114, 178 24 27 12, tab 4
   button "Keine Mail", 115, 206 24 27 12, tab 4
+  button "Aus", 116, 234 24 27 12, tab 4
   tab "HostServ", 5
   tab "Frei", 7
   edit "NAASC X-Control v1.0 r25", 6, 189 152 80 10, read center
   button "Schliessen", 8, 116 167 37 12, default cancel
-  edit "© sidekix @ irc.Staff-Chat.net", 11, 189 163 80 10, read center
+  edit "Â© sidekix @ irc.Staff-Chat.net", 11, 189 163 80 10, read center
   edit "http://www.Staff-Chat.net", 12, 189 175 80 10, read center
-  button "Aus", 116, 234 24 27 12
 }
 
 on 1:dialog:scnnaasccontrol:*:*:{
@@ -162,4 +162,3 @@ on 1:dialog:scnnaasccontrol:*:*:{
     halt
   }
 }
-
