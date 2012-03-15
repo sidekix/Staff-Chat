@@ -1,34 +1,49 @@
-dialog ng_ic {
+dialog ngic_10 {
   title "NextGen IRC Control"
-  size -1 -1 217 221
+  size -1 -1 217 215
   option dbu
   icon 1, 0 0 217 137,  $mircdirngic\ngic.png, 0
   button "Schliessen", 2, 180 0 37 12, ok cancel
-  box "Anope 1.9.x", 3, 1 139 66 61
-  button "NickServ", 4, 3 146 30 12
-  button "ChanServ", 5, 34 146 30 12
-  button "MemoServ", 6, 3 159 30 12
-  button "HostServ", 7, 34 159 30 12
-  button "BotServ", 8, 18 172 30 12
-  button "OperServ", 9, 3 185 30 12
-  button "Global", 10, 34 185 30 12
-  box "Denora", 11, 1 200 66 20
-  button "Denora", 12, 16 207 37 11
-  box "IRC Defender", 13, 76 139 41 23
-  button "Defender", 14, 81 146 30 12
-  box "GNU World", 15, 123 139 94 36
-  button "CControl", 16, 128 146 28 12
-  button "ChanFix", 17, 186 146 28 12
-  button "CService", 18, 157 146 28 12
-  button "DScan", 19, 186 159 28 12
-  button "NickServ", 20, 128 159 28 12
-  button "Scanner", 21, 157 159 28 12
-  box "SrvX 1.3.x", 22, 123 176 94 36
-  button "NickServ", 23, 127 183 28 12
-  button "ChanServ", 24, 156 183 28 12
-  button "HelpServ", 25, 185 183 28 12
-  button "OperServ", 26, 141 196 28 12
-  button "Global", 27, 171 196 28 12
-  box "IdleRPG", 28, 76 164 41 23
-  button "IdleRPG", 29, 81 172 30 12
+  box "Anope 1.9.x", 3, 2 141 47 24
+  button "Anope ", 4, 4 149 40 12
+  box "Denora", 5, 1 164 47 22
+  button "Denora", 6, 4 171 40 12
+  box "IRC Defender", 7, 50 165 42 22
+  button "Defender", 8, 56 172 30 12
+  box "IdleRPG", 9, 1 186 47 25
+  button "IdleRPG", 10, 4 195 40 12
+  box "Atheme 7.x", 11, 51 141 41 24
+  button "Atheme", 12, 56 149 30 12
+  box "Omega", 13, 50 186 42 25
+  button "Omega", 14, 56 195 30 12
+  box "P10", 15, 178 139 38 73
+  button "GNU World", 16, 181 146 32 12
+  button "SrvX", 17, 181 160 32 12
+}
+
+on 1:dialog:ngic_10:*:*:{
+  if $devent = init { halt } 
+  elseif $devent = sclick {
+    ; ### Anope Control ID 4
+    if $did = 4 { dialog -m ngic_anope ngic_anope }
+    ; ### Denora Control ID 6
+    ; if $did = 6 { dialog -m ngic_denora ngic_denora }
+    ; ### IdleRPG Control ID 10
+    ; if $did = 10 { dialog -m ngic_idlerpg ngic_idlerpg }
+  }
+}
+
+dialog ngic_anope {
+  title "NGIC - Anope 1.9.x"
+  size -1 -1 235 241
+  option dbu
+  tab "Info", 1, 0 0 233 213
+  icon 2, 33 23 169 59, $mircdirngic\ngic-anope.png, 0, tab 1
+  text "Dieses Anope 1.9.x Script gehoert zum NGIC (c) sidekix - irc.staff-chat.net #sidekix", 3, 1 214 232 8, center
+  button "Schliessen", 4, 96 226 37 12, ok
+  tab "NickServ", 5
+  tab "ChanServ", 6
+  tab "BotServ", 7
+  tab "HostServ", 8
+  tab "OperServ / Global", 9
 }
